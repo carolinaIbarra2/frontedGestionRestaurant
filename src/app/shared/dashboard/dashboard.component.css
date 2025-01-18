@@ -1,0 +1,221 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;   
+}
+
+header#logotipo {
+    background-image: url('/assets/images/loginFon2.png'); /* Imagen de fondo */
+    background-size: cover; /* Ajusta el fondo para cubrir todo el área */
+    background-position: center; /* Centra la imagen de fondo */
+    padding: 5px;
+    color: white;
+    text-align: left;
+    position: relative;
+    display: flex;
+    justify-content: space-between; /* Espacia el logo a la izquierda y el menú a la derecha */
+    align-items: center;    
+}
+
+header#logotipo::after {
+    content: "";
+    display: block;
+    width: 100%;
+    background: linear-gradient(90deg, #ece9e9, #ddd2d2) !important;
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    height: 3px;
+    z-index: 1; /* Nivel inferior para la línea */
+}
+
+/* Contenedor del logotipo en primer plano */
+.logo-container {
+    display: flex; /* Organiza el contenido en una fila */
+    align-items: center; /* Alinea el texto y la imagen verticalmente al centro */
+}
+
+.logo {
+    max-width: 90px; /* Ajusta el tamaño del logotipo */
+    height: auto;    
+    margin-left: 15px;
+}
+
+.plogo{
+    margin-left: 15px;
+    color: rgb(228,111,43);
+    font-weight: bold; 
+    font-size: 22px;  
+}
+
+/* Estilos para el menú de usuario y el botón de cierre de sesión */
+.user-menu {
+    position: relative;
+    margin-right: 15px; /* Margen derecho para separar del borde */
+    z-index: 2; /* Nivel superior para el menú de usuario */
+}
+
+.user-button {
+    background-color: transparent;
+    color: rgb(16, 102, 178);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    padding: 5px 10px;
+    z-index: 3; /* Nivel superior para que esté encima de la línea */
+}
+
+.user-icon, .arrow-icon {
+    margin-right: 5px;
+}
+
+.user-button:hover .arrow-icon {
+    transform: rotate(180deg); /* Efecto de rotación en hover */
+    transition: transform 0.2s;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%; /* Justo debajo del botón */
+    right: 0;
+    background-color: #8f8883;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 3; /* Nivel superior para que esté encima de la línea */
+}
+
+.dropdown-menu a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 5px 0;
+}
+
+.dropdown-menu a:hover {
+    background-color: #555;
+}
+
+/* Mostrar el menú desplegable al hacer hover sobre user-menu */
+.user-menu:hover .dropdown-menu {
+    display: block;
+}
+
+/* Contenedor principal */
+.main-container {
+    display: flex;
+    min-height: calc(105vh - 110px); /* Ajusta según el tamaño de header y footer */
+}
+
+/* Barra de navegación lateral */
+.menu-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu-list li {
+    margin: 15px 0; /* Espacio entre elementos */
+}
+
+.menu-list a {
+    text-decoration: none;
+    color: #333333; /* Color del texto */
+    background-color: #f0f0f0; /* Fondo gris suave */
+    padding: 10px 20px;
+    display: block;
+    border-radius: 8px; /* Bordes redondeados */
+    font-size: 14px;
+    font-weight: 500;
+    margin-right: 15px; /* Margen derecho */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera para darle un efecto de elevación */
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.menu-list a:hover {
+    background-color: rgb(127,17,17); /* Fondo un poco más oscuro al pasar el cursor */
+    color: white !important; /* Cambia el color del texto en hover */
+}
+
+
+.sidebar {
+    width: 200px;
+    background-image: url('/assets/images/loginFon2.png'); /* Imagen de fondo */
+    background-size: cover; /* Ajusta el fondo para cubrir todo el área */
+    background-position: right;
+    padding-top: 20px;
+    position: relative; /* Define el contexto de posicionamiento */
+}
+
+.sidebar::after {
+    content: "";
+    display: block;
+    height: 100%; /* La altura de la línea será igual a la barra lateral */
+    width: 3px; /* Grosor de la línea vertical */
+    background: linear-gradient(180deg, #ece9e9, #ddd2d2); /* Degradado vertical */
+    position: absolute;
+    top: 0;
+    right: 0; /* Coloca la línea en el borde derecho; usa `left: 0;` para el borde izquierdo */
+    z-index: 1;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding-left: 15px;
+}
+
+.sidebar ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+    padding: 10px;
+}
+
+/* Estilos para submenú en Gestión Usuarios */
+/* Estilos para el submenú */
+.sidebar ul li ul {
+    display: none;
+    background-color: #f8f8f8; /* Fondo gris suave */
+    padding-left: 15px;
+    border-radius: 8px; /* Bordes redondeados */    
+    margin: 10px;;
+}
+
+.sidebar ul li ul li {
+    margin-bottom: 5px; /* Espacio entre los elementos del submenú */
+}
+
+.sidebar ul li ul li a {
+    text-decoration: none;
+    color: #333;; /* Color del texto */
+    display: block;
+    padding: 4px 7px; /* Espaciado para el submenú */
+    background-color: #f8f8f8; /* Fondo gris claro */
+    border-radius: 6px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.sidebar ul li ul li a:hover {
+    background-color: #f8f8f8; /* Fondo un poco más oscuro al pasar el cursor */
+    color: rgb(127,17,17) !important; /* Cambia el color del texto en hover */
+}
+
+/* Mostrar el submenú al hacer hover sobre el elemento principal */
+.sidebar ul li:hover ul {
+    display: block;
+}
+
+
+/* Contenido principal */
+#content {
+    flex-grow: 1;
+    padding-top: 20px;
+    background-color: white;
+}

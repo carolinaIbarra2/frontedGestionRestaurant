@@ -1,0 +1,236 @@
+/* ========== Estilos Generales para login ========== */
+
+html,body{
+    /* Definición del fondo y fuentes */
+    background-image: url('/assets/images/loginFon.png');
+    background-position: center; /* Centra la imagen */
+    background-size: cover;
+    background-repeat: no-repeat;
+    font-family: 'Coming Soon', 'Exo', 'Fuzzy Bubbles', 'Itim', 'Mona Sans', sans-serif;
+    height: 100%;
+    margin: 0; /* Elimina márgenes predeterminados */
+    padding: 0; /* Elimina relleno predeterminado */
+    box-sizing: border-box; /* Asegura que el padding y borde se cuenten dentro del tamaño */
+}
+
+/* ========== Header ========== */
+/* Define el contenedor del logotipo y la altura */
+header{
+display: flex;
+align-items: center;
+justify-content: center;
+width: 100%;
+height: 150px;    
+}
+
+#logotipo img{
+display: block;
+width: auto;
+height: 120px;
+}
+
+/* ========== Content ========== */
+
+ /* Bloque contenido */
+
+.container{
+display: flex;
+align-items: center;
+justify-content: center;
+width: 100%;
+height: calc(100vh - 3vh); /* Resta la altura del header */
+flex-direction: column;
+}
+
+ /* Fondo de la tarjeta */
+
+.card {
+    position: relative;
+    margin-bottom: auto;
+    width: 480px;
+    background-color: rgb(249, 246, 246);
+    border: 1px solid #ccc;
+    box-shadow: 0px 4px 8px rgba(58, 57, 56, 0.8);
+    border-radius: 8px;
+    padding-left: 50px;
+    padding-right: 50px;
+    background-image: url('/assets/images/login.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+ /* Capa semi-transparente para suavizar el fondo de la tarjeta */
+
+.card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(242, 236, 236, 0.5); /* Ajusta la opacidad aquí */
+    z-index: 1;
+}
+
+.card * {
+    position: relative;
+    z-index: 1; /* Coloca el contenido encima de la capa semi-transparente */
+}
+
+.card-header{
+position: relative;
+height: 80px;
+}
+
+.card-header h3{
+color: black;
+text-align: center;
+padding-top: 20px;
+}
+
+ /* Iconos redes sociales */
+
+.social_icon span{
+font-size: 60px;
+margin-left: 5px;
+color: rgb(223,26,33);
+}
+
+.social_icon span:hover{
+color: rgb(243, 214, 2);
+cursor: pointer;
+}
+
+.social_icon{
+position: absolute;
+right: -410px;
+top: -120px;
+}
+
+ /* Estilos para campos tipo input  */
+
+.input-group-prepend span{
+width: 70px;
+background-color: rgb(223,85,34);
+color: black;
+border: 1px solid #000;  /* Ajusta el grosor y el color del borde */
+border-radius: 2%;
+}
+
+input:focus{
+outline: 0 0 0 0  !important;
+box-shadow: 0 0 0 0 !important;
+
+}
+
+.div-tags{
+margin-bottom: 10px;
+margin-top: 15px;
+}
+
+.form-control{
+width: 425px;
+height: 25px;
+border: 1px solid #0f0f0f; /* Borde de 1px, color gris (#ccc), sólido */ 
+border-radius: 4px;
+}
+
+ /* Estilos para label y checkbox Recuerdame */
+
+.remember{
+color: black;
+margin-bottom: 10px;
+margin-top: 40px;
+margin-bottom: 30px;
+font-size: 16px;
+}
+
+.remember input
+{
+width: 20px;
+margin-left: -2px;
+margin-right: 5px;
+}
+
+ /* Estilos para boton */
+
+.btn-login{
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.login_btn{
+color: black;
+background-color: rgb(223,85,34);
+width: 100px;
+height: 45px;
+font-family: 'Coming Soon', 'Exo', 'Fuzzy Bubbles', 'Itim', 'Mona Sans', sans-serif;
+font-size: 16px;
+font-weight: bold;
+}
+
+.login_btn:hover{
+color: black;
+background-color: rgb(223,26,33);
+cursor: pointer;
+}
+
+ /* Estilos para pie de pagina */
+
+.card-footer{
+margin-top: 25px;
+margin-bottom: 10px;
+font-size: 14px;
+font-weight: bold;
+position: absolute;
+right: -320px;
+}
+
+.card-footer a{
+color: inherit;
+}
+
+/* ========== Pie de pagina ========== */
+
+footer {
+    color:rgb(99, 94, 94);
+    text-align: center;
+    height: 5px;
+    font-size: 12px;
+}
+
+footer p a{
+    color: rgb(99, 94, 94);
+    text-decoration: none;
+}
+
+footer p a:hover {
+    text-decoration: underline;  /* Opción: muestra subrayado al pasar el mouse */
+}
+
+/* ========== Errores ========== */
+
+ /* Estilos para mensajes de error */
+.alert {
+    padding: 5px;
+    border-radius: 5px;
+    margin: 5px 0;
+    font-size: 14px;
+    font-family: 'Coming Soon', 'Exo', 'Fuzzy Bubbles', 'Itim', 'Mona Sans';
+}
+
+.alert-error {
+    background-color: #cdf9a4;
+    color: #0f4b06;
+    border: 1px solid #cdf9a4;
+}    
+
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+    text-align: center;
+  }
