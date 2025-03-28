@@ -1,1 +1,48 @@
-<p>users works!</p>
+<div class="container">
+    <h2>Lista de Usuarios (Empleados)</h2>
+
+    <!-- Botón para agregar usuario (solo visible para administradores) -->
+    <div *ngIf="isAdmin">
+        <a routerLink="/dashboard/users/registrar" class="button-input">Ingresar usuario</a>
+    </div> 
+    
+    <!-- Tabla de Usuarios -->
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Celular</th>
+                <th>Roles</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Si la lista de usuarios está vacía, se muestra esta fila -->
+            <tr *ngIf="users?.length === 0">
+                <td colspan="5">No hay usuarios para mostrar</td>
+            </tr>
+
+            <!-- Si hay usuarios, se listan -->
+            <tr *ngFor="let user of users">
+                <td>{{ user.name }}</td>
+                <td>{{ user.last_name }}</td>
+                <td>{{ user.phone_number }}</td>
+                <td>{{ user.roles?.join(', ') }}</td>
+                <td>
+                    <!-- Botón para ver detalles del usuario -->
+                    <button (click)="seeUserDetails(user.id)" class="btnDetail">Ver Detalle</button>
+
+                    <!-- Botón para editar usuario -->
+                    <button (click)="userEdit(user.id)" class="btnEdit">Editar</button>
+
+                    <!-- Botón para eliminar usuario con confirmación -->
+                    <button (click)="userDelete(user.id)" class="btnDelete">Eliminar</button>
+
+                </td>
+
+            </tr>
+        </tbody>
+
+    </table> 
+

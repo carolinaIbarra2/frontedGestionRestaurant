@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
+import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 
 
@@ -14,7 +14,7 @@ export class LoginComponent {
   loginForm : FormGroup;
   errorMessage: string = '';
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router){
+  constructor(private fb: FormBuilder, private userService: UserService, private router: Router){
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
@@ -26,7 +26,7 @@ export class LoginComponent {
     const { email, password } = this.loginForm.value;
 
     //Llama al servicio de autenticación
-    this.authService.login(email, password).subscribe({
+    this.userService.login(email, password).subscribe({
       next: (response) => {
         const token = response?.token;
 
