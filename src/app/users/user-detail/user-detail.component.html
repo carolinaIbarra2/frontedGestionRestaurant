@@ -1,1 +1,64 @@
-<p>user-detail works!</p>
+<div class="user-details" *ngIf="user">
+    <h2>Detalles del Usuario</h2>
+
+    <div class="detail-item">
+        <strong>Nombre:</strong>
+        <span *ngIf="!isEditing">{{ user.name }}</span>
+        <input *ngIf="isEditing" [(ngModel)]="user.name">
+    </div>
+
+    <div class="detail-item">
+        <strong>Apellido:</strong>
+        <span *ngIf="!isEditing">{{ user.last_name }}</span>
+        <input *ngIf="isEditing" [(ngModel)]="user.last_name">
+    </div>
+
+    <div class="detail-item">
+        <strong>Teléfono:</strong>
+        <span *ngIf="!isEditing">{{ user.phone_number }}</span>
+        <input *ngIf="isEditing" [(ngModel)]="user.phone_number">
+    </div>
+
+    <div class="detail-item">
+        <strong>Dirección:</strong>
+        <span *ngIf="!isEditing">{{ user.address }}</span>
+        <input *ngIf="isEditing" [(ngModel)]="user.address">
+    </div>
+
+    <div class="detail-item">
+        <strong>Rol:</strong>
+        <span *ngIf="!isEditing">{{ userRolesText }}</span>
+    
+        <div *ngIf="isEditing" class="roles-container">
+            <label *ngFor="let role of roles">
+                <input 
+                    type="checkbox" 
+                    [value]="role.name" 
+                    (change)="toggleRole(role.id)" 
+                    [checked]="isRoleSelected(role.id)" />
+                {{ role.name }}
+            </label>
+        </div>
+    </div>
+      
+    
+    <div class="detail-item">
+        <strong>Acceso a Django:</strong>
+        <span *ngIf="!isEditing">{{ user.is_staff ? 'Sí' : 'No' }}</span>
+        <input *ngIf="isEditing" id="is_staff" type="checkbox" [(ngModel)]="user.is_staff" />    </div>
+
+    <div class="detail-item">
+        <strong>Es Superusuario:</strong>
+        <span *ngIf="!isEditing">{{ user.is_superuser ? 'Sí' : 'No' }}</span>
+        <input *ngIf="isEditing" id="is_superuser" type="checkbox" [(ngModel)]="user.is_superuser" />    </div>
+
+    <div class="detail-item">
+        <strong>Esta activo::</strong>
+        <span *ngIf="!isEditing">{{ user.is_active ? 'Sí' : 'No' }}</span>
+        <input *ngIf="isEditing" id="is_active" type="checkbox" [(ngModel)]="user.is_active" />
+    </div>
+
+    <button (click)="edit()" class="btn btn-edit">{{ isEditing ? 'Guardar' : '✏ Editar' }}</button>
+
+
+</div>

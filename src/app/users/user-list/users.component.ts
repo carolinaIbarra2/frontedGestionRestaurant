@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
+import { PaginatedResponse } from 'src/app/models/pagination-interface'
 
 @Component({
   selector: 'app-users',
@@ -10,43 +11,47 @@ import { UserService } from 'src/app/services/user.service';
 export class UsersComponent implements OnInit {
 
   users: any[] = []   //Lista de usuarios
-  isAdmin: boolean = false;
+  selectedUser: any = null;
+
+  totalPages: number = 1;
+  currentPage: number = 1;
 
   constructor(
     private userService: UserService, private router: Router
   ){}
 
   ngOnInit(): void {
-    this.userService.listUsers().subscribe({
-      next: (data) => {
-        this.users = data; // Ya es un array, sin errores en *ngFor
-        console.log('Usuarios cargados:', this.users);
-      },
-      error: (error) => {
-        console.error('Error al obtener usuarios:', error);
-      }
-    });
-    this.isAdmin = this.checkIfAdmin(); // Lógica para verificar si es admin
+    this.getUsers();
   }
 
   // Obtener lista de usuarios desde la API
-  getUsers(): void {
-    this.userService.listUsers().subscribe({
-      next: (data) => {
-        this.users = data;
-      },
-      error: (err) => {
-        console.error('Error cargando usuarios', err);
-      }
+  getUsers(page: number = 1) {
+    this.userService.listUsers(page).subscribe((data: PaginatedResponse) => {
+      this.users = data.items;  // Extraemos solo los usuarios
+      this.totalPages = data.total_pages;
+      this.currentPage = data.current_page;
     });
   }
 
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.getUsers(this.currentPage + 1);
+    }
+  }
+
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.getUsers(this.currentPage - 1);
+    }
+  }
+
+
   // Método para verificar si el usuario es admin
-checkIfAdmin(): boolean {
-  // Aquí deberías obtener el rol del usuario autenticado
-  const userRole = localStorage.getItem('userRole'); // Solo como ejemplo
-  return userRole === 'admin';
-}
+  checkIfAdmin(): boolean {
+    // Aquí deberías obtener el rol del usuario autenticado
+    const userRole = localStorage.getItem('userRole'); // Solo como ejemplo
+    return userRole === 'admin';
+  }
 
   // Eliminar usuario con confirmación
   userDelete(userId: number): void {
@@ -62,13 +67,9 @@ checkIfAdmin(): boolean {
     }
   }
 
-
-  userEdit(userId: number): void{
-    this.router.navigate([`/dashboard/users/editar/${userId}`]);
-  }
-
+  //Ver detalle usuario
   seeUserDetails(userId: number): void{
-
+    this.router.navigate(['/dashboard/users/detail', userId]);
   }
 }
  

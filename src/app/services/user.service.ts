@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { PaginatedResponse } from 'src/app/models/pagination-interface'
+
 
 @Injectable({
   providedIn: 'root'
@@ -40,8 +42,8 @@ export class UserService {
   }
 
   //Obtener roles desde el backend
-  getRoles(): Observable<any[]>{
-    return this.http.get<any[]>(`${this.baseUrlRoles}`, { headers: this.getAuthHeaders() });
+  getRoles(): Observable<any>{
+    return this.http.get<any>(`${this.baseUrlRoles}`, { headers: this.getAuthHeaders() });
   }
 
   //Crear un usuario POST(empleado)
@@ -51,11 +53,16 @@ export class UserService {
   }
 
   //Listar usuarios GET (empleados)
-  listUsers(): Observable<any[]> {
-    return this.http.get<UserResponse>(this.baseUrl, { headers: this.getAuthHeaders() })
+  listUsers(page: number = 1): Observable<PaginatedResponse> {
+    return this.http.get<PaginatedResponse>(`${this.baseUrl}?page=${page}`, { headers: this.getAuthHeaders() })
     .pipe(
-      tap(response => console.log('Respuesta de listUsers:', response)), // Verifica la respuesta
-      map(response => response.items || []) // Extrae solo la lista de usuarios
+      tap(response => console.log('Respuesta de listUsers:')), // Depuración
+      map(response => ({
+        items: response.items || [],
+        total_pages: response.total_pages,
+        current_page: response.current_page,
+        total_items: response.total_items
+      }))
     );
   }
 

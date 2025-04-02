@@ -32,8 +32,7 @@ export class RegisterComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    // Obtener token almacenado
-    this.getUserInfo();  // Obtiene información del usuario y roles
+    // Obtener token almacenado    
     this.loadRoles();   //obtener la lista de roles
   }
 
@@ -63,28 +62,26 @@ export class RegisterComponent implements OnInit{
     }
   }
 
-
-  getUserInfo(): void {
-    // Obtener token almacenado
-    const token = localStorage.getItem('auth_token');
-
-    if (token) {
-      try {
-        // Decodificar token JWT
-        const payload = JSON.parse(atob(token.split('.')[1]));
-        this.isAdmin = payload.is_superuser || false;
-      } catch (error) {
-        console.error('Error al decodificar el token:', error);
-        this.isAdmin = false;
-      }
+  onRoleChange(event: any, roleId: number): void {
+    const selectedRoles = this.registerForm.value.roles || [];
+    if (event.target.checked) {
+      // Si se seleccionó la casilla, agregamos el rol al array
+      this.registerForm.patchValue({
+        roles: [...selectedRoles, roleId]
+      });
+    } else {
+      // Si se desmarcó la casilla, eliminamos el rol del array
+      this.registerForm.patchValue({
+        roles: selectedRoles.filter((id: number) => id !== roleId)
+      });
     }
   }
-
+ 
 
   loadRoles(): void {
     this.userService.getRoles().subscribe({
       next: (data) => {
-        this.roles = data;
+        this.roles = data.items;
       },
       error: (err) => {
         console.error('Error cargando roles:', err);

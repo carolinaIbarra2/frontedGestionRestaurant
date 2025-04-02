@@ -2,101 +2,144 @@
 
 /* Aplicar estilos de fuente y sombra a todo el documento */
 html,body{
-    font-family: 'Coming Soon', 'Exo', 'Fuzzy Bubbles', 'Itim', 'Mona Sans';
+    font-family: 'Inter', sans-serif;
+    background-color: #f3f4f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 95vh;
+    margin: 0;
 }
 
 
 /* ===== Contenedor Principal del Formulario ===== */
 
 .form-container {
-    position: relative;
-    background-color: #ffffff;
+    background-color: #fff;
     width: 100%;
-    max-width: 800px;  /* Limitar el ancho del formulario */
-    margin: 30px auto;
-    padding: 40px;
-    border-radius: 12px;
-    border: 1px solid #d1d5db; 
-    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    backdrop-filter: blur(10px); /* Efecto de desenfoque en el fondo */  
+    max-width: 700px;  /* Limitar el ancho del formulario */
+    margin: 10px auto;
+    padding: 10px 30px;
+    border-radius: 10px;
+    border: 0.1px solid rgb(193, 193, 242); /* Borde azul */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */ 
 }
 
 /* Título del formulario, centrado y con espaciado inferior */
 h2 {
     text-align: center;
+    margin-top: 7px;
     margin-bottom: 20px;
-    color: #1f2937;
-    font-size: 16px;
-    font-weight: 600;
+    color: #333;
+    font-size: 15px;
 }
 
 /* ===== Grupos de Campos de Entrada ===== */
 /* Estilo para el contenedor del formulario en dos columnas */
-.form-columns {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px; /* Espacio entre los campos */
-}
 
 /* Cada grupo de formulario ocupará el 45% del ancho (2 columnas) */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
 .form-group {
-    flex: 1 1 45%;
     display: flex;
     flex-direction: column;
+    margin-bottom: 12px;
 }
 
 /* Etiquetas de los campos del formulario */
 .form-group label {
-    font-size: 14px;
-    color: #374151;
-    margin-bottom: 5px;
+    font-size: 12px;
+    color: #555;
+    margin-bottom: 0.1px;
 }
 
 /* Campos de entrada de texto */
-.form-group input {
-    padding: 12px;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    font-size: 14px;
+.form-group input, .form-group select {
+    padding: 8px;
+    border-radius: 6px;
+    font-size: 12px;
     background-color: #f9fafb;
     transition: border-color 0.3s;
+    border: 0.1px solid rgb(193, 193, 242); /* Borde azul */
 }
 
-.form-group input:focus {
-    border-color: #3b82f6;
-    outline: none;
+.special-options label {
+    font-size: 12px;
+    color: #555;
+}
+
+.special-options input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin-left: 5px;
 }
 
 /* Mensajes de error en los campos */
-.form-group .error-message {
+.form-group .text-danger {
     font-size: 12px;
     color: #ef4444; 
-    margin-top: 5px;
+    margin-top: 3px;
 }
 
 
 /* Estilos para el boton */
 button {
     width: 100%;
-    padding: 15px;
-    background-color: #3b82f6 ;
+    max-width: 100px;
+    padding: 12px;
+    background-color: rgb(184, 184, 242);
     font-weight: 600;
     color: white;
     font-size: 14px;
     border: none;
-    border-radius: 8px;
+    border-radius: 6px;
     cursor: pointer;
-    margin-top: 20px; 
     transition: background-color 0.3s;
 }
 
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 5px; /* Ajusta según sea necesario */
+}
+
+
 /* Efecto hover en el botón de envío */
 button:hover {
-    background-color: #2563eb ;
+    background-color: rgb(228,111,43);
 }
 
 /* Efectos de transición para el botón */
 button:focus {
     outline: none;
     box-shadow: 0px 0px 5px rgba(182, 137, 12, 0.5);
+}
+
+/* ===== Checkboxes ===== */
+.form-group input[type="checkbox"] {
+    width: auto;
+    margin-right: 5px;
+}
+
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+label {
+ font-size: 16px;
+ cursor: pointer;
+}
+
+.roles-container {
+    padding: 10px;
+    border-radius: 6px;
+    background-color: #f9fafb;  /* Color azul claro */
+    border: 0.1px solid rgb(193, 193, 242);
 }
