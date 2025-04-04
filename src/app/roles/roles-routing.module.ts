@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RolesComponent } from './rol-list/roles.component';
-import { RolCreateComponent } from './rol-create/rol-create.component';
+import { RolCreateComponent } from './register/rol-create.component';
 import { RolDeleteComponent } from './rol-delete/rol-delete.component';
 
 const routes: Routes = [

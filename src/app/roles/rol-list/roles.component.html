@@ -1,28 +1,46 @@
 <div class="container">
     <h1>Lista de Roles</h1>
 
-    <div class="create-rol">
-        <button routerLink="create" class="btn btn-rol">Crear Rol</button>
+    <!-- Botón para agregar roles (solo visible para administradores) -->
+    <div class="admin-actions">
+        <a routerLink="/dashboard/roles/regiter" class="btn-primary">➕ Ingresar roles</a>
     </div>
 
-    <!--Tabla para listar roles-->
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>N°</th>
-                <th>Nombre</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let role of roles; let i = index">
-                <td>{{ i + 1 }}</td>
-                <td>{{ role.name }}</td>
-                <td>
-                    <button class="btn btn-edit" >Editar</button>
-                    <button [routerLink]="['/dashboard/roles/delete', role.id]" class="btn btn-delete">Eliminar</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="table-container">
+        <!--Tabla para listar roles-->
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>N°</th>
+                    <th>Nombre</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Si la lista de roles está vacía, se muestra esta fila -->
+                <tr *ngIf="roles?.length === 0">
+                    <td colspan="3">No hay roles para mostrar</td>
+                </tr>
+
+                <!-- Si hay roles, se listan -->
+                <tr *ngFor="let role of roles; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ role.name }}</td>
+                    <td>
+                        <!-- Botón para ver detalles del rol -->
+                        <button (click)="seeRolDetails(rol.id)" class="btn btn-detail" >👁 Ver</button>
+                        <button (click)="rolDelete(rol.id)" class="btn btn-delete">🗑 Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Controles de paginación -->
+     <div class="pagination">
+        <button class="page-btn" (click)="prevPage()" [disabled]="currentPge ===1">Anterior</button>
+        <span class="page-btn page-current">Página {{ currentPage }} de {{ totalPages }}</span>
+        <button class="page-btn" (click)="nextPage()" [disabled]="currentPage === totalPages">Siguiente</button>
+     </div>
+
 </div>
