@@ -1,5 +1,5 @@
 <div class="user-details" *ngIf="user">
-    <h2>Detalles del Usuario</h2>
+    <h2>Detalles del Empleado</h2>
 
     <div class="detail-item">
         <strong>Nombre:</strong>
@@ -53,7 +53,7 @@
         <input *ngIf="isEditing" id="is_superuser" type="checkbox" [(ngModel)]="user.is_superuser" />    </div>
 
     <div class="detail-item">
-        <strong>Esta activo::</strong>
+        <strong>Esta activo:   </strong>
         <span *ngIf="!isEditing">{{ user.is_active ? 'Sí' : 'No' }}</span>
         <input *ngIf="isEditing" id="is_active" type="checkbox" [(ngModel)]="user.is_active" />
     </div>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { PaginatedResponse } from 'src/app/models/pagination-interface'
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-users',
@@ -55,16 +56,47 @@ export class UsersComponent implements OnInit {
 
   // Eliminar usuario con confirmación
   userDelete(userId: number): void {
-    if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
-      this.userService.deleteUser(userId).subscribe({
-        next: () => {
-          this.getUsers(); // Recargar la lista después de eliminar
-        },
-        error: (err) => {
-          console.error('Error eliminando usuario', err);
-        }
-      });
-    }
+    Swal.fire({
+      title: '¿Estás seguro de que deseas eliminar este usuario?',
+      text: 'Esta acción no se puede deshacer',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+      customClass: {
+        popup: 'mi-popup',
+        title: 'mi-titulo',
+        confirmButton: 'mi-boton-confirmar',
+        cancelButton: 'mi-boton-cancelar'
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.userService.deleteUser(userId).subscribe({
+          next: () => {
+            this.getUsers(); // Recargar la lista después de eliminar
+            Swal.fire({
+              title: '¡Eliminado!',
+              text: 'El usuario ha sido eliminado con éxito.',
+              icon: 'success',
+              customClass: {
+                popup: 'mi-popup-success'
+              }
+            });
+          },
+          error: (err) => {
+            console.error('Error eliminando usuario', err);
+            Swal.fire({
+              title: 'Error',
+              text: 'No se pudo eliminar el usuario',
+              icon: 'error',
+              customClass: {
+                popup: 'mi-popup-error'
+              }
+            });
+          }
+        });
+      }
+    });
   }
 
   //Ver detalle usuario

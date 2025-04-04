@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-detail',
@@ -23,9 +24,15 @@ export class UserDetailComponent implements OnInit {
       this.userService.getUserById(userId).subscribe(
         data => {
           this.user = data;
-          
-          this.user.roles = Array.isArray(this.user.roles) ? this.user.roles : [];
 
+          const rolId = this.user.roles?.role_ids || [];  //role_ids , nombre de variable como retorna el backend
+          const rolName = this.user.roles?.names || [];
+          
+          this.user.roles = rolId.map((id: number, index: number) => ({
+            id,
+            name: rolName[index]
+          }));
+          console.log('Usuario con roles formateados:', this.user);
         },
         error => {
           console.error('Error al obtener usuario:', error);
