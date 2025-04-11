@@ -32,7 +32,7 @@ export class RegisterComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    // Obtener token almacenado    
+      
     this.loadRoles();   //obtener la lista de roles
   }
 
@@ -52,7 +52,6 @@ export class RegisterComponent implements OnInit{
           this.router.navigate(['/dashboard']);
         },
         error: (err) => {
-          console.error('Error en el registro', err);
           this.errorMessage = 'Error en el registro. Verifique los datos.';
           }
         });

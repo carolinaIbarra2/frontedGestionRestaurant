@@ -47,8 +47,8 @@ export class RolesService {
   }
 
   //Actualiza roles PUT
-  updateRol(rol_id: number, rolData: any): Observable<any>{
-    return this.http.put(`${this.baseUrl}${rol_id}/`, rolData, { headers: this.getAuthHeaders() });  
+  updateRol(rol_id: number): Observable<any>{
+    return this.http.put(`${this.baseUrl}${rol_id}/`, { headers: this.getAuthHeaders() });  
   }
 
   //Eliminar rol DELETE
@@ -57,7 +57,7 @@ export class RolesService {
   }
 }
 
-// Definir la interfaz `RolResponse`
+// interfaz `RolResponse`
 interface RolResponse {
   items: any[];
 }

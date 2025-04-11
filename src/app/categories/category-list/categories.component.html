@@ -1,1 +1,54 @@
-<p>categories works!</p>
+<div class="container">
+    <h2>Lista de Categorias</h2>
+
+    <!-- Botón para agregar categorias (solo visible para administradores) -->
+    <div class="admin-actions">
+        <a routerLink="/dashboard/categories/register" class="btn-primary">➕ Ingresar Categorías</a>
+    </div>
+
+    <div class="table-container">
+        <!--Tabla para listar categorias-->
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>N°</th>
+                    <th>Imagen</th>
+                    <th>Código</th>
+                    <th>Nombre</th>  
+                    <th>Activo</th>                  
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Si la lista de categorias está vacía, se muestra esta fila -->
+                <tr *ngIf="categories?.length === 0">
+                    <td colspan="3">No hay categorías para mostrar</td>
+                </tr>
+
+                <!-- Si hay categorias, se listan -->
+                <tr *ngFor="let category of categories; let i = index">
+                    <td>{{ ((currentPage - 1) * pageSize) + i + 1 }}</td>
+                    <td></td>
+                    <td>{{ category.code }}</td>
+                    <td>{{ category.name }}</td>     
+                    <td>{{ category.is_active }}</td>               
+                    <td>
+                        <!-- Botón para ver detalles de la categoria -->
+                        <button (click)="seeCategoryDetails(category.id)" class="btn btn-detail" >👁 Ver</button>
+                        <button (click)="categoryDelete(category.id)" class="btn btn-delete">🗑 Eliminar</button> 
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Controles de paginación -->
+    <div class="pagination">
+        <button class="page-btn" (click)="prevPage()" [disabled]="currentPage ===1">Anterior</button>
+        <span class="page-btn page-current">Página {{ currentPage }} de {{ totalPages }}</span>
+        <button class="page-btn" (click)="nextPage()" [disabled]="currentPage === totalPages">Siguiente</button>
+     </div>
+
+
+
+</div>

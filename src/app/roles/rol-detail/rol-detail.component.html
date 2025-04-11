@@ -1,0 +1,12 @@
+<div class="rol-details" *ngIf="rol">
+    <h2>Detalles del Rol</h2>
+
+    <div class="detail-item">
+        <strong>Nombre:</strong>
+        <span *ngIf="!isEditing">{{ rol.name }}</span>
+        <input *ngIf="isEditing" [(ngModel)]="rol.name">
+    </div>
+
+    <button (click)="edit()" class="btn btn-edit">{{ isEditing ? 'Guardar' : '✏ Editar' }}</button>
+
+</div>

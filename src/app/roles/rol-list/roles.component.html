@@ -1,9 +1,9 @@
 <div class="container">
-    <h1>Lista de Roles</h1>
+    <h2>Lista de Roles</h2>
 
     <!-- Botón para agregar roles (solo visible para administradores) -->
     <div class="admin-actions">
-        <a routerLink="/dashboard/roles/regiter" class="btn-primary">➕ Ingresar roles</a>
+        <a routerLink="/dashboard/roles/register" class="btn-primary">➕ Ingresar roles</a>
     </div>
 
     <div class="table-container">
@@ -28,8 +28,8 @@
                     <td>{{ role.name }}</td>
                     <td>
                         <!-- Botón para ver detalles del rol -->
-                        <button (click)="seeRolDetails(rol.id)" class="btn btn-detail" >👁 Ver</button>
-                        <button (click)="rolDelete(rol.id)" class="btn btn-delete">🗑 Eliminar</button>
+                        <button (click)="seeRolDetails(role.id)" class="btn btn-detail" >👁 Ver</button>
+                        <button (click)="rolDelete(role.id)" class="btn btn-delete">🗑 Eliminar</button>
                     </td>
                 </tr>
             </tbody>
@@ -38,7 +38,7 @@
 
     <!-- Controles de paginación -->
      <div class="pagination">
-        <button class="page-btn" (click)="prevPage()" [disabled]="currentPge ===1">Anterior</button>
+        <button class="page-btn" (click)="prevPage()" [disabled]="currentPage ===1">Anterior</button>
         <span class="page-btn page-current">Página {{ currentPage }} de {{ totalPages }}</span>
         <button class="page-btn" (click)="nextPage()" [disabled]="currentPage === totalPages">Siguiente</button>
      </div>

@@ -1,22 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { RolesRoutingModule } from './roles-routing.module';
 import { RolesComponent } from './rol-list/roles.component';
-import { RolCreateComponent } from './register/rol-create.component';
-import { RolDeleteComponent } from './rol-delete/rol-delete.component';
+import { RegisterComponent } from './register/register.component';
+import { RolDetailComponent } from './rol-detail/rol-detail.component';
 
 @NgModule({
   declarations: [
     RolesComponent,
-    RolCreateComponent,
-    RolDeleteComponent
+    RegisterComponent,
+    RolDetailComponent
   ],
   imports: [
     CommonModule,
     RolesRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class RolesModule { }
