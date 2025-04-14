@@ -4,8 +4,6 @@ import { HttpClientModule } from '@angular/common/http'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
-import { ProductDetailComponent } from './products/product-detail/product-detail.component';
-import { CategoryDetailComponent } from './categories/category-detail/category-detail.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './shared/dashboard/dashboard.component';
 import { RolesModule } from './roles/roles.module';
@@ -14,8 +12,6 @@ import { RolesModule } from './roles/roles.module';
   declarations: [
     AppComponent,
     LoginComponent,
-    ProductDetailComponent,
-    CategoryDetailComponent,
     DashboardComponent
   ],
   imports: [

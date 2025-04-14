@@ -50,7 +50,7 @@ export class RegisterComponent implements OnInit {
         //Enviar datos al backend
         this.categoryService.registerCategory(formData).subscribe({
           next: () => {
-            this.router.navigate(['/dashboard']);
+            this.router.navigate(['/dashboard/categories']);
           },
           error: (err) => {
             this.errorMessage = 'Error en el registro. Verifique los datos.';

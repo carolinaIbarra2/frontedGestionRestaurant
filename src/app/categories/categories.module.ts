@@ -5,12 +5,14 @@ import { CategoriesRoutingModule } from './categories-routing.module';
 import { CategoriesComponent } from './category-list/categories.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './register/register.component';
+import { CategoryDetailComponent } from './category-detail/category-detail.component';
 
 
 @NgModule({
   declarations: [
     CategoriesComponent,
-    RegisterComponent
+    RegisterComponent,
+    CategoryDetailComponent
   ],
   imports: [
     CommonModule,

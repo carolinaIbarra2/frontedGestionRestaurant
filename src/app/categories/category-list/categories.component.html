@@ -28,7 +28,9 @@
                 <!-- Si hay categorias, se listan -->
                 <tr *ngFor="let category of categories; let i = index">
                     <td>{{ ((currentPage - 1) * pageSize) + i + 1 }}</td>
-                    <td></td>
+                    <td>
+                        <img *ngIf="category.image" [src]="category.image" alt="Imagen" class="image">
+                    </td>
                     <td>{{ category.code }}</td>
                     <td>{{ category.name }}</td>     
                     <td>{{ category.is_active }}</td>               

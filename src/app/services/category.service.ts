@@ -10,6 +10,7 @@ import { PaginatedResponse } from "../models/pagination-interface";
 export class CategoryService {
 
     private baseUrl = 'http://127.0.0.1:8000/api/v1/categories/';
+    private mediaUrl = 'http://127.0.0.1:8000/media/'
 
     constructor(private http: HttpClient) {}
 
@@ -24,16 +25,23 @@ export class CategoryService {
 
     //Crear una categoria POST
     registerCategory(categoryData: any): Observable<any>{
-        return this.http.post(`${this.baseUrl}`, categoryData, { headers: this.getAuthHeaders() });
+        const token = localStorage.getItem('token') || '';
+        const headers = new HttpHeaders({
+            'Authorization': `Token ${token}`
+        });
+
+        return this.http.post(`${this.baseUrl}`, categoryData, { headers });
     }
 
     //listar categorias GET
     listCategory(page: number=1): Observable<PaginatedResponse> {
         return this.http.get<PaginatedResponse>(`${this.baseUrl}?page=${page}`, { headers: this.getAuthHeaders() })
             .pipe(
-                tap(response => console.log('Respuesta de listCategorias:')), // Depuración
                 map(response => ({
-                    items: response.items || [],
+                    items: response.items.map(item => ({
+                        ...item,
+                        image: item.image ? `${this.mediaUrl}${item.image}` : null
+                    })),
                     total_pages: response.total_pages,
                     current_page: response.current_page,
                     total_items: response.total_items
@@ -42,13 +50,29 @@ export class CategoryService {
     }
 
     getCategoryById(category_id: number): Observable<any> {
-        return this.http.get(`${this.baseUrl}${category_id}/`, { headers: this.getAuthHeaders() });
+        return this.http.get<any>(`${this.baseUrl}${category_id}/`, { headers: this.getAuthHeaders() })
+            .pipe(
+                map(category => ({
+                    ...category,
+                    image: category.image ? `${this.mediaUrl}${category.image}` : null
+                }))
+            );
     }
+    
+    
 
     //Actualizar categorias PUT
-    updateCategory(category_id: number): Observable<any> {
-        return this.http.put(`${this.baseUrl}${category_id}/`, { headers: this.getAuthHeaders() });
-    }
+    updateCategory(category_id: number, categoryData: any): Observable<any> {
+        const token = localStorage.getItem('token') || '';
+        const headers = new HttpHeaders({
+          'Authorization': `Token ${token}`
+          // NO incluyas Content-Type aquí, Angular lo hará automáticamente
+        });
+      
+        return this.http.put(`${this.baseUrl}${category_id}/`, categoryData, { headers });
+      }
+      
+      
 
     //Eliminar categoria DELETE
     deleteCategory(category_id: number): Observable<any> {

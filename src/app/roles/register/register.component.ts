@@ -30,7 +30,7 @@ export class RegisterComponent implements OnInit {
       //Enviar datos al backend
       this.rolService.registerRol(rolData).subscribe({
         next: () => {
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/dashboard/roles']);
         },
         error: (err) => {
           this.errorMessage = 'Error en el registro. Verifique los datos.';

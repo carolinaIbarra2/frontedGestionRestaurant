@@ -1,1 +1,42 @@
-<p>category-detail works!</p>
+<div class="category-details" *ngIf="category">
+    <h2>Detalles de la categoría</h2>
+
+    <div class="detail-item">
+        <strong>Nombre:</strong>
+        <span *ngIf="!isEditing">{{ category.name }}</span>
+        <input *ngIf="isEditing" [(ngModel)]="category.name">
+    </div>
+
+    <div class="detail-item">
+        <strong>Código:</strong>
+        <span *ngIf="!isEditing">{{ category.code }}</span>
+        <input *ngIf="isEditing" [(ngModel)]="category.code">
+    </div>
+
+    <div class="detail-item">
+        <strong>Imagen:</strong>
+        <img *ngIf="category.image" [src]="category.image" alt="Imagen" class="image">
+        <input *ngIf="isEditing" type="file" (change)="onImageSelected($event)" #fileInput hidden />
+            <button class="button-image" type="button" (click)="onClickFileInput()">Seleccionar Imagen</button>
+            <span *ngIf="selectedImage">{{ selectedImage.name }}</span>
+    </div>
+
+    <div class="detail-item">
+        <strong>Esta activo:   </strong>
+        <span *ngIf="!isEditing">{{ category.is_active ? 'Sí' : 'No' }}</span>
+        <input *ngIf="isEditing" id="is_active" type="checkbox" [(ngModel)]="category.is_active" />
+    </div>
+
+    <div class="detail-item">
+        <strong>Productos asociados: </strong>
+        <ul>
+            <li *ngFor="let product of category.products">
+              <strong>{{ product.name }}</strong><br>
+              <span>Descripción: {{ product.description }}<br></span>
+              <span>Precio: {{ product.price | currency:'COP' }}</span>
+            </li>
+          </ul>
+    </div>
+
+    <button (click)="edit()" class="btn btn-edit">{{ isEditing ? 'Guardar' : '✏ Editar' }}</button>
+</div>

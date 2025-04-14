@@ -93,7 +93,7 @@ export class CategoriesComponent implements OnInit {
 
   //Ver detalle del rol
   seeCategoryDetails(categoryId: number): void{
-    this.router.navigate(['/dashboard/category/detail', categoryId]);
+    this.router.navigate(['/dashboard/categories/detail', categoryId]);
   }      
 
 }
