@@ -1,0 +1,120 @@
+/* ===== Estilos generales para el Formulario de registro ===== */
+
+/* Aplicar estilos de fuente y sombra a todo el documento */
+html,body{
+    font-family: 'Inter', sans-serif;
+    background-color: #f3f4f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ===== Contenedor Principal del Formulario ===== */
+
+.form-container {
+    background-color: #fff;
+    width: 100%;
+    max-width: 700px;  /* Limitar el ancho del formulario */
+    margin: 10px auto;
+    padding: 30px 50px;
+    border-radius: 10px;
+    border: 0.1px solid rgb(193, 193, 242); /* Borde azul */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */ 
+}
+
+/* Título del formulario, centrado y con espaciado inferior */
+h2 {
+    text-align: center;
+    margin-top: 7px;
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 15px;
+}
+
+/* ===== Grupos de Campos de Entrada ===== */
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px;
+}
+
+/* Etiquetas de los campos del formulario */
+.form-group label {
+    font-size: 12px;
+    color: #555;
+    margin-bottom: 4px;
+}
+
+/* Campos de entrada de texto */
+.form-group input, .form-group select {
+    padding: 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    background-color: #f9fafb;
+    transition: border-color 0.3s;
+    border: 0.1px solid rgb(193, 193, 242); /* Borde azul */
+}
+
+.special-options label {
+    font-size: 12px;
+    color: #555;
+}
+
+.special-options input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin-left: 5px;
+}
+
+/* Mensajes de error en los campos */
+.form-group .text-danger {
+    font-size: 12px;
+    color: #ef4444; 
+    margin-top: 3px;
+}
+
+
+/* Estilos para el boton */
+button {
+    width: 100%;
+    max-width: 100px;
+    padding: 12px;
+    background-color: rgb(184, 184, 242);
+    font-weight: 600;
+    color: white;
+    font-size: 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 5px; /* Ajusta según sea necesario */
+}
+
+
+/* Efecto hover en el botón de envío */
+button:hover {
+    background-color: rgb(228,111,43);
+}
+
+/* Efectos de transición para el botón */
+button:focus {
+    outline: none;
+    box-shadow: 0px 0px 5px rgba(182, 137, 12, 0.5);
+}
+
+.button-image{
+    background-color: #e16f3a;
+    color: white;
+    border: none;    
+    padding: 10px 16px;
+    font-size: 12px;
+    cursor: pointer;
+    white-space: nowrap;
+    min-width: 150px;
+}

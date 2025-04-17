@@ -1,0 +1,54 @@
+<div class="form-container">
+    <h2>Registro de Productos</h2>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="name">Nombre:</label>
+                <input id="name" formControlName="name" type="text" required />    
+            </div>
+
+            <div class="form-group">
+                <label for="category">Seleccione una categoría:</label>               
+                <div class="products-container">
+                    <select class="form-select" formControlName="category">
+                        <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+                    </select>                    
+                </div>                
+            </div>
+
+            <div class="form-group">
+                <label for="description">Descripción:</label>
+                <input id="description" formControlName="description" type="text" />
+            </div>
+
+            <div class="form-group">
+                <label for="price">Precio:</label>
+                <input id="price" formControlName="price" type="text" />
+            </div>
+
+            <div class="form-group">
+                <label for="image">Imagen:</label>
+                <input id="image" type="file" (change)="onImageSelected($event)" hidden #fileInput />  <!-- input real, oculto -->
+                <button class="button-image" type="button" (click)="fileInput.click()">Seleccionar Imagen</button>  <!-- botón personalizado -->
+                <span *ngIf="selectedImage">{{ selectedImage.name }}</span>   <!-- nombre del archivo seleccionado -->
+            </div>
+
+            <div class="form-group">
+                <div>
+                    <label for="is_active">Activo:</label>
+                    <input id="is_active" formControlName="is_active" type="checkbox" />
+                </div>               
+            </div>
+
+        </div>
+        
+
+        <div class="button-container">
+            <button type="submit" [disabled]="registerForm.invalid">Registrar</button>
+        </div>
+
+        <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+        
+
+    </form>
+</div>

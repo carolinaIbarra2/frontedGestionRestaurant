@@ -1,1 +1,52 @@
-<p>products works!</p>
+<div class="container">
+    <h2>Lista de Productos</h2>
+
+    <div class="admin-actions">
+        <a routerLink="/dashboard/products/register" class="btn-primary">➕ Ingresar productos </a>
+    </div> 
+
+    <div class="table-container">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>N°</th>
+                    <th>Imagen</th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Activo</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Si la lista de productos está vacía, se muestra esta fila -->
+                <tr *ngIf="products?.length === 0">
+                    <td colspan="7">No hay productos para mostrar</td>
+                </tr>
+
+                <!-- Si hay productos, se listan -->
+                <tr *ngFor="let product of products; let i = index">
+                    <td>{{ ((currentPage - 1) * pageSize) + i + 1 }}</td>
+                    <td>
+                        <img *ngIf="product.image" [src]="product.image" alt="Imagen" class="image">
+                    </td>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.price }}</td>
+                    <td>{{ product.is_active }}</td>
+                    <td>
+                        <!-- Botón para ver detalles del usuario -->
+                        <button (click)="seeProductDetails(product.id)" class="btn btn-detail">👁 Ver</button>
+                        <button (click)="productDelete(product.id)" class="btn btn-delete">🗑 Eliminar</button>    
+                    </td>
+                </tr>  
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Controles de paginación -->
+    <div class="pagination">
+        <button class="page-btn" (click)="prevPage()" [disabled]="currentPage ===1">Anterior</button>
+        <span class="page-btn page-current">Página {{ currentPage }} de {{ totalPages }}</span>
+        <button class="page-btn" (click)="nextPage()" [disabled]="currentPage === totalPages">Siguiente</button>
+    </div>
+
+</div>

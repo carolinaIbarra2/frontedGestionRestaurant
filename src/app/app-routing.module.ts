@@ -16,7 +16,8 @@ const routes: Routes = [
     children: [
       { path: 'users', loadChildren: () => import('./users/users.module').then(m => m.UsersModule) },  // Carga el módulo de usuarios
       { path: 'roles', loadChildren: () => import('./roles/roles.module').then(m => m.RolesModule) },  // Carga el módulo de roles        
-      { path: 'categories', loadChildren: () => import('./categories/categories.module').then(m => m.CategoriesModule) } // Carga el módulo de categorias
+      { path: 'categories', loadChildren: () => import('./categories/categories.module').then(m => m.CategoriesModule) }, // Carga el módulo de categorias
+      { path: 'products', loadChildren: () => import('./products/products.module').then(m => m.ProductsModule) }, // Carga el módulo de productos
     ]
   },
 ];

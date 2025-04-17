@@ -49,8 +49,8 @@ export class UsersComponent implements OnInit {
 
   // Método para verificar si el usuario es admin
   checkIfAdmin(): boolean {
-    // Aquí deberías obtener el rol del usuario autenticado
-    const userRole = localStorage.getItem('userRole'); // Solo como ejemplo
+    
+    const userRole = localStorage.getItem('userRole');
     return userRole === 'admin';
   }
 
