@@ -11,6 +11,7 @@ export class UserDetailComponent implements OnInit {
   user: any = null;
   isEditing: boolean = false; 
   roles: any[] = [];  //Lista de roles disponibles
+  errorMessage: string = '';
 
   constructor(private userService: UserService, private route: ActivatedRoute) {}
 
@@ -31,7 +32,6 @@ export class UserDetailComponent implements OnInit {
             id,
             name: rolName[index]
           }));
-          console.log('Usuario con roles formateados:', this.user);
         },
         error => {
           console.error('Error al obtener usuario:', error);
@@ -44,14 +44,25 @@ export class UserDetailComponent implements OnInit {
     this.isEditing = !this.isEditing;
 
     if (!this.isEditing && this.user && this.user.id) {
-      this.userService.updateUser(this.user.id, { roles: this.user.roles }).subscribe(
-        (response: any) => {
-          console.log('Roles actualizados:', response);
-        },
-        (error: any) => {
-          console.error('Error al actualizar roles:', error);
-        }
-      );
+      this.userService.updateUser(this.user.id, { 
+        name: this.user.name,
+        last_name: this.user.last_name,
+        email: this.user.email,
+        identification: this.user.identification,
+        phone_number: this.user.phone_number,
+        address: this.user.address,
+        is_active: this.user.is_active,
+        password: this.user.password,
+        roles: this.user.roles.map((r: any) => r.id)  }).subscribe({
+          next: () => {},
+          error: (err) => {
+            if (err.error && err.error.error) {
+              this.errorMessage = err.error.error; // <-- mensaje del backend
+            } else {
+              this.errorMessage = 'Error en el registro. Verifique los datos.';
+            }
+          }
+        });
     }
   }
 

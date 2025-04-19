@@ -10,6 +10,7 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
+                    <th>N°</th>
                     <th>Nombre</th>
                     <th>Apellido</th>
                     <th>Celular</th>
@@ -24,7 +25,8 @@
                 </tr>
     
                 <!-- Si hay usuarios, se listan -->
-                <tr *ngFor="let user of users">
+                <tr *ngFor="let user of users; let i = index">
+                    <td>{{ ((currentPage - 1) * pageSize) + i + 1 }}</td>
                     <td>{{ user.name }}</td>
                     <td>{{ user.last_name }}</td>
                     <td>{{ user.phone_number }}</td>

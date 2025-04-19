@@ -54,10 +54,6 @@ export class RegisterComponent implements OnInit {
       if (this.selectedImage) {
         formData.append('image', this.selectedImage);
       }
-      console.log('Categoría:', formData.get('category'));
-      console.log('Tipo de dato de categoría:', typeof formData.get('category'));
-
-
       //Enviar datos al backend
       this.productService.registerProduct(formData).subscribe({
         next: () => {

@@ -16,6 +16,7 @@ export class UsersComponent implements OnInit {
 
   totalPages: number = 1;
   currentPage: number = 1;
+  pageSize: number = 5; // valor usado por defecto en la paginación del backend
 
   constructor(
     private userService: UserService, private router: Router

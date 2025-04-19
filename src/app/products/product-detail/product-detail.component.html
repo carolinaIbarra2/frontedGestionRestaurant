@@ -1,1 +1,50 @@
-<p>product-detail works!</p>
+<div class="product-details" *ngIf="products">
+    <h2>Detalles del producto</h2>
+
+    <div class="detail-item">
+        <strong>Nombre:</strong>
+        <span *ngIf="!isEditing">{{ products.name }}</span>
+        <input *ngIf="isEditing" [(ngModel)]="products.name">
+    </div>
+
+    <div class="detail-item">
+        <strong>Categoria:</strong>
+        <span *ngIf="!isEditing">{{ productCategoriesText }}</span>
+
+        <div *ngIf="isEditing" class="product-container">
+            <select [(ngModel)]="products.category[0].id" name="category">
+                <option *ngFor="let cat of categories" [value]="cat.id">
+                {{ cat.name }}
+                </option>
+            </select>    
+        </div>
+    </div>
+
+    <div class="detail-item">
+        <strong>Descripción:</strong>
+        <span *ngIf="!isEditing">{{ products.description }}</span>
+        <input *ngIf="isEditing" [(ngModel)]="products.description">
+    </div>
+
+    <div class="detail-item">
+        <strong>Precio:</strong>
+        <span *ngIf="!isEditing">{{ products.price }}</span>
+        <input *ngIf="isEditing" [(ngModel)]="products.price">
+    </div>
+
+    <div class="detail-item">
+        <strong>Imagen:</strong>
+        <img *ngIf="products.image" [src]="products.image" alt="Imagen" class="image">
+        <input *ngIf="isEditing" type="file" (change)="onImageSelected($event)" #fileInput hidden />
+            <button class="button-image" type="button" (click)="onClickFileInput()">Seleccionar Imagen</button>
+            <span *ngIf="selectedImage">{{ selectedImage.name }}</span>
+    </div>
+
+    <div class="detail-item">
+        <strong>Esta activo:</strong>
+        <span *ngIf="!isEditing">{{ products.is_active ? 'Sí' : 'No' }}</span>
+        <input *ngIf="isEditing" id="is_active" type="checkbox" [(ngModel)]="products.is_active" />
+    </div>    
+
+    <button (click)="edit()" class="btn btn-edit">{{ isEditing ? 'Guardar' : '✏ Editar' }}</button>
+</div>

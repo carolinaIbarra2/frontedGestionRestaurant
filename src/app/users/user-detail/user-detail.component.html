@@ -14,7 +14,19 @@
     </div>
 
     <div class="detail-item">
-        <strong>Teléfono:</strong>
+        <strong>Correo electrónico:</strong>
+        <span *ngIf="!isEditing">{{ user.email }}</span>
+        <input *ngIf="isEditing" [(ngModel)]="user.email">
+    </div>
+
+    <div class="detail-item">
+        <strong>Identificación:</strong>
+        <span *ngIf="!isEditing">{{ user.identification }}</span>
+        <input *ngIf="isEditing" [(ngModel)]="user.identification">
+    </div>
+
+    <div class="detail-item">
+        <strong>Celular o teléfono:</strong>
         <span *ngIf="!isEditing">{{ user.phone_number }}</span>
         <input *ngIf="isEditing" [(ngModel)]="user.phone_number">
     </div>
@@ -39,26 +51,23 @@
                 {{ role.name }}
             </label>
         </div>
-    </div>
-      
+    </div>    
     
-    <div class="detail-item">
-        <strong>Acceso a Django:</strong>
-        <span *ngIf="!isEditing">{{ user.is_staff ? 'Sí' : 'No' }}</span>
-        <input *ngIf="isEditing" id="is_staff" type="checkbox" [(ngModel)]="user.is_staff" />    </div>
-
-    <div class="detail-item">
-        <strong>Es Superusuario:</strong>
-        <span *ngIf="!isEditing">{{ user.is_superuser ? 'Sí' : 'No' }}</span>
-        <input *ngIf="isEditing" id="is_superuser" type="checkbox" [(ngModel)]="user.is_superuser" />    </div>
-
     <div class="detail-item">
         <strong>Esta activo:   </strong>
         <span *ngIf="!isEditing">{{ user.is_active ? 'Sí' : 'No' }}</span>
         <input *ngIf="isEditing" id="is_active" type="checkbox" [(ngModel)]="user.is_active" />
     </div>
 
+    <div class="detail-item">
+        <strong>Contraseña:</strong>
+        <span *ngIf="!isEditing">****</span>
+        <input *ngIf="isEditing" [(ngModel)]="user.password">
+    </div>
+
     <button (click)="edit()" class="btn btn-edit">{{ isEditing ? 'Guardar' : '✏ Editar' }}</button>
+
+    <div *ngIf="errorMessage" class="error-box">{{ errorMessage }}</div>
 
 
 </div>

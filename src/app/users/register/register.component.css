@@ -143,3 +143,23 @@ label {
     background-color: #f9fafb;  /* Color azul claro */
     border: 0.1px solid rgb(193, 193, 242);
 }
+
+/*Mensaje error*/
+.error-box {
+    background-color: #ffe5e5;        /* Fondo rosado suave */
+    color: #d8000c;                   /* Texto rojo oscuro */
+    border: 1px solid #d8000c;        /* Borde rojo oscuro */
+    padding: 12px 16px;
+    margin: 10px 0;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.error-box::before {
+    content: '⚠️ ';
+    margin-right: 5px;
+}
+  

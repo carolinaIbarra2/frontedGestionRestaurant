@@ -13,7 +13,6 @@ export class RegisterComponent implements OnInit{
   registerForm: FormGroup;
   errorMessage: string = '';
   roles: any[] = [];  //Lista de roles disponibles
-  isAdmin: boolean = false; //variable para verificar si el usuario  es adminitrador
 
   constructor(private fb: FormBuilder, private userService: UserService, private router: Router) {
     this.registerForm = this.fb.group({
@@ -25,9 +24,7 @@ export class RegisterComponent implements OnInit{
       phone_number: ['', [Validators.required, Validators.pattern('[0-9]+'), Validators.maxLength(15)]],
       address: ['', [Validators.required]],
       roles: [[], Validators.required],
-      is_staff: [false],
-      is_active: [true],
-      is_superuser: [false]
+      is_active: [false]
     });
   }
 
@@ -40,20 +37,21 @@ export class RegisterComponent implements OnInit{
     if (this.registerForm.valid) {
       const userData = this.registerForm.value;
 
-      // Si no es administrador, aseguramos que is_staff e is_superuser sean falsos
-      if(!this.isAdmin){
-        userData.is_staff = false;
-        userData.is_superuser = false;
-      }
+      userData.is_active = !!userData.is_active; //convertir a booleano
 
       // Enviar datos al backend
       this.userService.registerUser(userData).subscribe({
         next: () => {
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/dashboard/users']);
         },
         error: (err) => {
-          this.errorMessage = 'Error en el registro. Verifique los datos.';
+          if (err.error && err.error.error) {
+            this.errorMessage = err.error.error; // <-- mensaje del backend
+          } else {
+            this.errorMessage = 'Error en el registro. Verifique los datos.';
           }
+        }
+        
         });
 
       } else {
