@@ -44,6 +44,7 @@ export class UserDetailComponent implements OnInit {
     this.isEditing = !this.isEditing;
 
     if (!this.isEditing && this.user && this.user.id) {
+      
       this.userService.updateUser(this.user.id, { 
         name: this.user.name,
         last_name: this.user.last_name,
@@ -52,7 +53,6 @@ export class UserDetailComponent implements OnInit {
         phone_number: this.user.phone_number,
         address: this.user.address,
         is_active: this.user.is_active,
-        password: this.user.password,
         roles: this.user.roles.map((r: any) => r.id)  }).subscribe({
           next: () => {},
           error: (err) => {

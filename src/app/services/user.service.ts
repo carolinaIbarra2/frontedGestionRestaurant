@@ -18,7 +18,7 @@ export class UserService {
 
   // Método privado para obtener los headers con autenticación
   private getAuthHeaders(): HttpHeaders {
-    const token = localStorage.getItem('token') || '';
+    const token = localStorage.getItem('access_token') || '';
     return new HttpHeaders({
       'Authorization': `Token ${token}`,  // Agregar token en el header
       'Content-Type': 'application/json'
@@ -28,18 +28,34 @@ export class UserService {
   //El método login hace la solicitud POST al servidor con los datos del usuario.
   login(email: string, password: string): Observable<any> {
     const data = { email, password };
-    return this.http.post<{ token: string }>(`${this.baseUrl}token/`, data, {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-    }).pipe(
+    return this.http.post<any>(`${this.baseUrl}token/`, data).pipe(
       tap(response => {
-        if (response && response.token) { 
-          localStorage.setItem('token', response.token);
+        if (response?.token && response?.refresh_token) {
+          // Guarda ambos tokens
+          localStorage.setItem('access_token', response.token);
+          localStorage.setItem('refresh_token', response.refresh_token);
         } else {
-          console.error('No se recibió un token válido.');
+          console.error('Tokens no recibidos correctamente.');
         }
       })
     );
   }
+
+  refreshToken(): Observable<any> {
+    const refreshToken = localStorage.getItem('refresh_token');
+    if (!refreshToken) return new Observable();
+  
+    return this.http.post<any>(`${this.baseUrl}token/update/`, {
+      refresh: refreshToken
+    }).pipe(
+      tap(response => {
+        if (response?.token) {
+          localStorage.setItem('access_token', response.token);
+        }
+      })
+    );
+  }
+  
 
   //Obtener roles desde el backend
   getRoles(): Observable<any>{
@@ -80,6 +96,15 @@ export class UserService {
   //Eliminar usuario DELETE (empleados)
   deleteUser(user_id: number): Observable<any> {
     return this.http.delete(`${this.baseUrl}${user_id}/`, { headers: this.getAuthHeaders() });
+  }
+
+  //Actualizar contraseña
+  updatePassword(currentPassword: string, newPassword: string): Observable<any>{
+    const data = {
+      currentPassword: currentPassword,
+      newPassword: newPassword
+    };
+    return this.http.put(`${this.baseUrl}update-password/`, data, { headers: this.getAuthHeaders() });
   }
 }
 

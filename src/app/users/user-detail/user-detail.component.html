@@ -62,7 +62,7 @@
     <div class="detail-item">
         <strong>Contraseña:</strong>
         <span *ngIf="!isEditing">****</span>
-        <input *ngIf="isEditing" [(ngModel)]="user.password">
+        <a *ngIf="isEditing" [routerLink]="['/edit-password', user.id]" class="edit-password">Editar contraseña</a>
     </div>
 
     <button (click)="edit()" class="btn btn-edit">{{ isEditing ? 'Guardar' : '✏ Editar' }}</button>
