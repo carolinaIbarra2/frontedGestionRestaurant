@@ -3,6 +3,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { PaginatedResponse } from 'src/app/models/pagination-interface'
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -13,14 +16,14 @@ export class UserService {
   private baseUrl = 'http://127.0.0.1:8000/api/v1/users/';
   private baseUrlRoles = 'http://127.0.0.1:8000/api/v1/roles/';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
 
   // Método privado para obtener los headers con autenticación
   private getAuthHeaders(): HttpHeaders {
     const token = localStorage.getItem('access_token') || '';
     return new HttpHeaders({
-      'Authorization': `Token ${token}`,  // Agregar token en el header
+      'Authorization': `Bearer ${token}`,  // Agregar token en el header
       'Content-Type': 'application/json'
     });
   }
@@ -30,28 +33,17 @@ export class UserService {
     const data = { email, password };
     return this.http.post<any>(`${this.baseUrl}token/`, data).pipe(
       tap(response => {
-        if (response?.token && response?.refresh_token) {
+        if (response?.access_token && response?.refresh_token) {
           // Guarda ambos tokens
-          localStorage.setItem('access_token', response.token);
-          localStorage.setItem('refresh_token', response.refresh_token);
+          localStorage.setItem('access_token', response.access_token);  //nombres en backend
+          localStorage.setItem('refresh_token', response.refresh_token); //nombres en backend
         } else {
           console.error('Tokens no recibidos correctamente.');
         }
-      })
-    );
-  }
-
-  refreshToken(): Observable<any> {
-    const refreshToken = localStorage.getItem('refresh_token');
-    if (!refreshToken) return new Observable();
-  
-    return this.http.post<any>(`${this.baseUrl}token/update/`, {
-      refresh: refreshToken
-    }).pipe(
-      tap(response => {
-        if (response?.token) {
-          localStorage.setItem('access_token', response.token);
-        }
+      }),
+      catchError(error => {
+        console.error('Error en login:', error);
+        return throwError(() => new Error('Error en login'));
       })
     );
   }
@@ -59,7 +51,12 @@ export class UserService {
 
   //Obtener roles desde el backend
   getRoles(): Observable<any>{
-    return this.http.get<any>(`${this.baseUrlRoles}`, { headers: this.getAuthHeaders() });
+    return this.http.get<any>(`${this.baseUrlRoles}`, { headers: this.getAuthHeaders() }).pipe(
+      catchError((error) => {
+        console.error('Error en getRoles:', error);
+        return throwError(() => new Error('Error al obtener los roles.'));
+      })
+    );
   }
 
   //Crear un usuario POST(empleado)
@@ -69,10 +66,17 @@ export class UserService {
   }
 
   //Listar usuarios GET (empleados)
-  listUsers(page: number = 1): Observable<PaginatedResponse> {
-    return this.http.get<PaginatedResponse>(`${this.baseUrl}?page=${page}`, { headers: this.getAuthHeaders() })
-    .pipe(
-      tap(response => console.log('Respuesta de listUsers:')), // Depuración
+  listUsers(page: number = 1, filters: any = {}): Observable<PaginatedResponse> {
+    const params: any = { page };
+  
+    if (filters.name) params.name = filters.name;
+    if (filters.identification) params.identification = filters.identification;
+  
+    return this.http.get<PaginatedResponse>(this.baseUrl, {
+      headers: this.getAuthHeaders(),
+      params
+    }).pipe(
+      tap(response => console.log('Respuesta de listUsers:', response)), // Ayuda para depurar
       map(response => ({
         items: response.items || [],
         total_pages: response.total_pages,
@@ -81,11 +85,16 @@ export class UserService {
       }))
     );
   }
+  
 
   // Obtener un usuario por su ID
   getUserById(user_id: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}${user_id}/`, { headers: this.getAuthHeaders() })
-    ;
+    return this.http.get(`${this.baseUrl}${user_id}/`, { headers: this.getAuthHeaders() }).pipe(
+      catchError((error) => {
+        console.error('Error en getUserById:', error);
+        return throwError(() => new Error('Error al obtener el usuario.'));
+      })
+    );
   }
 
   //Actualizar usuarios PUT (empleados)
@@ -99,15 +108,33 @@ export class UserService {
   }
 
   //Actualizar contraseña
-  updatePassword(currentPassword: string, newPassword: string): Observable<any>{
+  updatePassword(user_id: number, currentPassword: string, newPassword: string): Observable<any>{
     const data = {
       currentPassword: currentPassword,
       newPassword: newPassword
     };
-    return this.http.put(`${this.baseUrl}update-password/`, data, { headers: this.getAuthHeaders() });
+    return this.http.put(`${this.baseUrl}${user_id}/edit-password/`, data, {
+      headers: this.getAuthHeaders()
+    }).pipe(      
+      catchError((error) => {
+        console.error('Error al actualizar contraseña:', error);
+        return throwError(() => new Error(error?.error?.error || 'Error al cambiar la contraseña'));
+      })
+    );
+  }
+
+  refreshToken(refreshToken: string): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}token/refresh/`, { refresh: refreshToken });
+  }
+
+
+  logout(){
+    // Elimina los tokens del localStorage
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    this.router.navigate(['/login']);
   }
 }
-
 
 // Definir la interfaz `UserResponse`
 interface UserResponse {

@@ -7,7 +7,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './shared/dashboard/dashboard.component';
 import { RolesModule } from './roles/roles.module';
-import { TokenInterceptor } from './interceptors/token-interceptor';
+import { AuthInterceptor } from './auth/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -26,7 +26,7 @@ import { TokenInterceptor } from './interceptors/token-interceptor';
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptor,
+      useClass: AuthInterceptor,
       multi: true
     }
   ],

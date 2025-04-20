@@ -28,18 +28,17 @@ export class LoginComponent {
     //Llama al servicio de autenticación
     this.userService.login(email, password).subscribe({
       next: (response) => {
-        const token = response?.token;
+        const token = response?.access_token;
+        const refreshToken = response?.refresh_token;
 
-      if (token) {
-        // Guardar el token en el almacenamiento local o de sesión
-        localStorage.setItem('auth_token', token);
-
-        // Redirigir al dashboard
-        this.router.navigate(['/dashboard']);
+        if (token && refreshToken) {
+          localStorage.setItem('access_token', token);
+          localStorage.setItem('refresh_token', refreshToken);
         
-      } else {
-        console.error('Token no recibido en la respuesta');
-      }
+          this.router.navigate(['/dashboard']);
+        } else {
+          console.error('Tokens no recibidos en la respuesta');
+        }
       },
       error: (err) => {
         //mensaje para errores

@@ -9,7 +9,7 @@ const routes: Routes = [
   { path: '', component: UsersComponent },  // Ruta para la lista de usuarios
   { path: 'register', component: RegisterComponent },
   { path: 'detail/:id', component: UserDetailComponent },
-  { path: 'edit-password', component: EditPasswordComponent }
+  { path: ':id/edit-password', component: EditPasswordComponent }
 ];
 
 @NgModule({

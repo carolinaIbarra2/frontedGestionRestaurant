@@ -15,7 +15,7 @@ export class RolesService {
 
   // Método privado para obtener los headers con autenticación
   private getAuthHeaders(): HttpHeaders {
-    const token = localStorage.getItem('token') || '';
+    const token = localStorage.getItem('access_token') || '';
     return new HttpHeaders({
       'Authorization': `Token ${token}`,  // Agregar token en el header
       'Content-Type': 'application/json'
