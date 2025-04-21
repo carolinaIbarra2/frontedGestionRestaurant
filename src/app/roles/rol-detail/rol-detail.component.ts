@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RolesService } from '../../services/roles.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-rol-detail',
@@ -11,6 +11,7 @@ export class RolDetailComponent implements OnInit {
 
   rol: any = null;
   isEditing: boolean = false;
+  errorMessage: string = '';
 
   constructor(private rolesService: RolesService, private route: ActivatedRoute) {}
 
@@ -20,8 +21,7 @@ export class RolDetailComponent implements OnInit {
     if (rolId) {
       this.rolesService.getRolById(rolId).subscribe(
         data => {
-          this.rol = data;
-          const rolName = this.rol.roles?.names || [];          
+          this.rol = data;       
         },
         error => {
           console.error('Error al obtener el rol;', error);
@@ -34,14 +34,18 @@ export class RolDetailComponent implements OnInit {
     this.isEditing = !this.isEditing;
 
     if(!this.isEditing && this.rol && this.rol.id) {
-      this.rolesService.updateRol(this.rol.id).subscribe(
-        (response: any) => {
-          console.log('Roles actualizados')
-        },
-        (error: any) => {
-          console.error('Error al actualizar roles')
-        }
-      );
+      this.rolesService.updateRol(this.rol.id, {
+        name: this.rol.name,
+        is_active: this.rol.is_active }).subscribe({
+          next: () => {},
+          error: (err) => {
+            if (err.error && err.error.error) {
+              this.errorMessage = err.error.error; // <-- mensaje del backend
+            } else {
+              this.errorMessage = 'Error en el registro. Verifique los datos.';
+            }
+          }
+        });
     }
   }
 }

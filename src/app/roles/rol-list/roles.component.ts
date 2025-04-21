@@ -16,6 +16,7 @@ export class RolesComponent implements OnInit {
 
   totalPages: number = 1;
   currentPage: number = 1;
+  pageSize: number = 5; // valor usado por defecto en la paginación del backend
 
   constructor(private rolesService: RolesService, private router: Router) {}
 

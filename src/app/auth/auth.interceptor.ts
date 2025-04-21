@@ -43,25 +43,29 @@ export class AuthInterceptor implements HttpInterceptor {
     });
   }
 
+  // Manejar el error 401 (token expirado o no válido)
   private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
     if (!this.refresh) {
       this.refresh = true;
       this.refreshToken.next(null);
 
+      // Obtener el refresh token para obtener un nuevo access token
       const refreshToken = localStorage.getItem('refresh_token');
       if (!refreshToken) {
         return throwError(() => new Error('No refresh token available'));
       }
 
+      // Solicitar el nuevo token desde el UserService
       return this.userService.refreshToken(refreshToken).pipe(
         switchMap((tokenResponse: any) => {
           this.refresh = false;
 
+          // Guardar el nuevo access token y pasarlo en la solicitud
           const newAccessToken = tokenResponse.access;
           localStorage.setItem('access_token', newAccessToken);
           this.refreshToken.next(newAccessToken);
 
-          return next.handle(this.addToken(request, newAccessToken));
+          return next.handle(this.addToken(request, newAccessToken)); // Reintentar la solicitud con el nuevo token
         }),
         catchError((err) => {
           this.refresh = false;
@@ -70,6 +74,7 @@ export class AuthInterceptor implements HttpInterceptor {
         })
       );
     } else {
+      // Si ya estamos intentando refrescar el token, esperar hasta que termine
       return this.refreshToken.pipe(
         filter(token => token !== null),
         take(1),

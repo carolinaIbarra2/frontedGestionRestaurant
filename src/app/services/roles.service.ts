@@ -13,23 +13,15 @@ export class RolesService {
   constructor(private http: HttpClient) { }
 
 
-  // Método privado para obtener los headers con autenticación
-  private getAuthHeaders(): HttpHeaders {
-    const token = localStorage.getItem('access_token') || '';
-    return new HttpHeaders({
-      'Authorization': `Token ${token}`,  // Agregar token en el header
-      'Content-Type': 'application/json'
-    });
-  }
-
+  
   //Crear un rol POST
   registerRol(rolData: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}`, rolData, { headers: this.getAuthHeaders() });
+    return this.http.post(`${this.baseUrl}`, rolData);
   }
 
   //listar roles GET
   listRoles(page: number=1): Observable<PaginatedResponse> {
-    return this.http.get<PaginatedResponse>(`${this.baseUrl}?page=${page}`, { headers: this.getAuthHeaders() })
+    return this.http.get<PaginatedResponse>(`${this.baseUrl}?page=${page}`)
         .pipe(
           tap(response => console.log('Respuesta de listUsers:')), // Depuración
           map(response => ({
@@ -43,17 +35,17 @@ export class RolesService {
 
 
   getRolById(rol_id: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}${rol_id}/`, { headers: this.getAuthHeaders() });
+    return this.http.get(`${this.baseUrl}${rol_id}/`);
   }
 
   //Actualiza roles PUT
-  updateRol(rol_id: number): Observable<any>{
-    return this.http.put(`${this.baseUrl}${rol_id}/`, { headers: this.getAuthHeaders() });  
+  updateRol(rol_id: number, rolData:any): Observable<any>{
+    return this.http.put(`${this.baseUrl}${rol_id}/`, rolData);  
   }
 
   //Eliminar rol DELETE
   deleteRol(rol_id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}${rol_id}/`, { headers: this.getAuthHeaders() });
+    return this.http.delete(`${this.baseUrl}${rol_id}/`);
   }
 }
 

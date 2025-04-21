@@ -15,7 +15,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private rolService: RolesService, private router: Router){
     this.registerForm = this.fb.group({
-      name: ['', Validators.required]
+      name: ['', Validators.required],
+      is_active: [false]
     });
   }
 
@@ -33,7 +34,11 @@ export class RegisterComponent implements OnInit {
           this.router.navigate(['/dashboard/roles']);
         },
         error: (err) => {
-          this.errorMessage = 'Error en el registro. Verifique los datos.';
+          if (err.error && err.error.error) {
+            this.errorMessage = err.error.error; // <-- mensaje del backend
+          } else {
+            this.errorMessage = 'Error en el registro. Verifique los datos.';
+          }
         }
       });
 

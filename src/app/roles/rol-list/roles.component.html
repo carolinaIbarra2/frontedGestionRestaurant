@@ -24,7 +24,7 @@
 
                 <!-- Si hay roles, se listan -->
                 <tr *ngFor="let role of roles; let i = index">
-                    <td>{{ i + 1 }}</td>
+                    <td>{{ ((currentPage - 1) * pageSize) + i + 1 }}</td>
                     <td>{{ role.name }}</td>
                     <td>
                         <!-- Botón para ver detalles del rol -->

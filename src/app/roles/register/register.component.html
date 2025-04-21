@@ -9,11 +9,18 @@
             </div>
         </div>
 
+        <div class="special-options">
+            <div>
+                <label for="is_active">Está Activo:</label>
+                <input id="is_active" formControlName="is_active" type="checkbox" />
+            </div>
+        </div> 
+
         <div class="button-container">
             <button type="submit" [disabled]="registerForm.invalid">Registrar</button>
         </div>
 
-        <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+        <div *ngIf="errorMessage" class="error-box">{{ errorMessage }}</div>
         
     </form>
 </div>
