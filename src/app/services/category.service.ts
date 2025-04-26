@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { map, Observable, tap } from "rxjs";
+import { map, Observable } from "rxjs";
 import { PaginatedResponse } from "../models/pagination-interface";
 
 
@@ -15,27 +15,30 @@ export class CategoryService {
     constructor(private http: HttpClient) {}
 
     // Método privado para obtener los headers con autenticación
-    private getAuthHeaders(): HttpHeaders {
-        const token = localStorage.getItem('token') || '';
+    private getAuthHeadersJson(): HttpHeaders {
+        const token = localStorage.getItem('access_token') || '';
         return new HttpHeaders({
-            'Authorization': `Token ${token}`,  // Agregar token en el header
+            'Authorization': `Bearer ${token}`,  // Agregar token en el header
             'Content-Type': 'application/json'
+        });
+    }
+
+    // Headers para FormData (no ponemos Content-Type)
+    private getAuthHeadersMultipart(): HttpHeaders {
+        const token = localStorage.getItem('access_token') || '';
+        return new HttpHeaders({
+            'Authorization': `Bearer ${token}`
         });
     }
 
     //Crear una categoria POST
     registerCategory(categoryData: any): Observable<any>{
-        const token = localStorage.getItem('token') || '';
-        const headers = new HttpHeaders({
-            'Authorization': `Token ${token}`
-        });
-
-        return this.http.post(`${this.baseUrl}`, categoryData, { headers });
+        return this.http.post(`${this.baseUrl}`, categoryData, { headers: this.getAuthHeadersMultipart()  });
     }
 
     //listar categorias GET
     listCategory(page: number=1): Observable<PaginatedResponse> {
-        return this.http.get<PaginatedResponse>(`${this.baseUrl}?page=${page}`, { headers: this.getAuthHeaders() })
+        return this.http.get<PaginatedResponse>(`${this.baseUrl}?page=${page}`, { headers: this.getAuthHeadersJson() })
             .pipe(
                 map(response => ({
                     items: response.items.map(item => ({
@@ -50,7 +53,7 @@ export class CategoryService {
     }
 
     getCategoryById(category_id: number): Observable<any> {
-        return this.http.get<any>(`${this.baseUrl}${category_id}/`, { headers: this.getAuthHeaders() })
+        return this.http.get<any>(`${this.baseUrl}${category_id}/`, { headers: this.getAuthHeadersJson() })
             .pipe(
                 map(category => ({
                     ...category,
@@ -58,30 +61,18 @@ export class CategoryService {
                 }))
             );
     }
-    
-    
+        
 
     //Actualizar categorias PUT
     updateCategory(category_id: number, categoryData: any): Observable<any> {
-        const token = localStorage.getItem('token') || '';
-        const headers = new HttpHeaders({
-          'Authorization': `Token ${token}`
-          // NO incluyas Content-Type aquí, Angular lo hará automáticamente
-        });
-      
-        return this.http.put(`${this.baseUrl}${category_id}/`, categoryData, { headers });
+        console.log(categoryData);
+        return this.http.put(`${this.baseUrl}${category_id}/`, categoryData, { headers: this.getAuthHeadersMultipart() });
       }
       
       
 
     //Eliminar categoria DELETE
     deleteCategory(category_id: number): Observable<any> {
-        return this.http.delete(`${this.baseUrl}${category_id}/`, { headers: this.getAuthHeaders() });
+        return this.http.delete(`${this.baseUrl}${category_id}/`, { headers: this.getAuthHeadersJson() });
     }
 }
-
-// interfaz `CategoryResponse`
-interface CategoryResponse {
-    items: any[];
-}
-  
