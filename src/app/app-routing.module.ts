@@ -13,6 +13,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       { path: 'users', loadChildren: () => import('./users/users.module').then(m => m.UsersModule) },  // Carga el módulo de usuarios
+      { path: 'customers', loadChildren: () => import('./customer/customers.module').then(m => m.CustomersModule) },  // Carga el módulo de clientes
       { path: 'roles', loadChildren: () => import('./roles/roles.module').then(m => m.RolesModule) },  // Carga el módulo de roles        
       { path: 'categories', loadChildren: () => import('./categories/categories.module').then(m => m.CategoriesModule) }, // Carga el módulo de categorias
       { path: 'products', loadChildren: () => import('./products/products.module').then(m => m.ProductsModule) }, // Carga el módulo de productos

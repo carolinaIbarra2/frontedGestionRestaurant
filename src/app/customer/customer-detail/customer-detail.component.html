@@ -1,0 +1,45 @@
+<div class="customer-details" *ngIf="customer">
+    <h2>Detalles del Cliente</h2>
+
+    <div class="detail-item">
+        <strong>Nombre:</strong>
+        <span *ngIf="!isEditing">{{ customer.name }}</span>
+        <input *ngIf="isEditing" [(ngModel)]="customer.name">
+    </div>
+
+    <div class="detail-item">
+        <strong>Apellido:</strong>
+        <span *ngIf="!isEditing">{{ customer.last_name }}</span>
+        <input *ngIf="isEditing" [(ngModel)]="customer.last_name">
+    </div>
+
+    <div class="detail-item">
+        <strong>Correo electrónico:</strong>
+        <span *ngIf="!isEditing">{{ customer.email }}</span>
+        <input *ngIf="isEditing" [(ngModel)]="customer.email">
+    </div>
+
+    <div class="detail-item">
+        <strong>Identificación:</strong>
+        <span *ngIf="!isEditing">{{ customer.identification }}</span>
+        <input *ngIf="isEditing" [(ngModel)]="customer.identification">
+    </div>
+
+    <div class="detail-item">
+        <strong>Celular o teléfono:</strong>
+        <span *ngIf="!isEditing">{{ customer.phone_number }}</span>
+        <input *ngIf="isEditing" [(ngModel)]="customer.phone_number">
+    </div>
+
+    <div class="detail-item">
+        <strong>Dirección:</strong>
+        <span *ngIf="!isEditing">{{ customer.address }}</span>
+        <input *ngIf="isEditing" [(ngModel)]="customer.address">
+    </div>
+      
+    <button (click)="edit()" class="btn btn-edit">{{ isEditing ? 'Guardar' : '✏ Editar' }}</button>
+
+    <div *ngIf="errorMessage" class="error-box">{{ errorMessage }}</div>
+
+
+</div>

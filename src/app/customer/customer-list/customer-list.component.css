@@ -1,0 +1,177 @@
+.container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+h2 {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 15px;
+    color: #333;
+}
+
+.admin-actions {
+  text-align: right;
+  margin-bottom: 15px;
+}
+
+.btn-primary {
+  display: inline-block;
+  padding: 10px 15px;
+  background-color: #ffddb5;
+  color: #87431d;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background 0.3s;
+  font-size: 12px;
+}
+
+.btn-primary:hover {
+  background-color: #817e7e;
+}
+
+/* Contenedor de la tabla */
+.table-container {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.table th,
+.table td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+  font-size: 12px;
+}
+
+.table th {
+  background: #817e7e;
+  color: white;
+  font-weight: bold;
+}
+
+.table tbody tr:nth-child(even) {
+  background: #f2f2f2;
+}
+
+.table tbody tr:hover {
+  background: #e1eaff;
+}
+
+/* Botones de acción */
+.btn {
+  padding: 8px 2px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 10px;
+  transition: 0.3s;
+  min-width: 65px;
+  margin: 5px; /* Espaciado uniforme en todos los lados */
+  display: inline-flex; /* Para mantener tamaño uniforme */
+  align-items: center; /* Centra el texto en el botón */
+  justify-content: center;
+}
+
+.btn {
+  margin-right: 12px; /* Agrega espacio entre botones */
+}
+
+.btn:last-child {
+  margin-right: 0; /* Elimina el margen del último botón */
+}
+
+.btn-detail {
+  background: #a0c4ff;
+  color: #044389;
+}
+
+.btn-detail:hover {
+  background: #88b4f7;
+}
+
+.btn-delete {
+  background: #ffb5b5;
+  color: #891b1b;
+}
+
+.btn-delete:hover {
+  background: #f7a0a0;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  gap: 8px; /* Espacio entre botones */
+}
+
+.page-btn {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: 0.3s;
+  min-width: 40px;
+  text-align: center;
+}
+
+  /*Estilos generales de la alerta */
+.mi-popup {
+  font-family: 'Arial', sans-serif !important;
+  background-color: #2a2a2a !important; /* Fondo oscuro */
+  color: white !important;
+  border-radius: 10px !important;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3) !important;
+}
+
+/*Estilos del título */
+.mi-titulo {
+  color: #f8d776 !important; /* Amarillo */
+  font-size: 14px !important;
+}
+
+/*Estilos del botón confirmar */
+.mi-boton-confirmar {
+  background-color: #d33 !important;
+  color: white !important;
+  font-size: 12px !important;
+  border-radius: 5px !important;
+  padding: 10px 15px !important;
+}
+
+/*Estilos del botón cancelar */
+.mi-boton-cancelar {
+  background-color: #3085d6 !important;
+  color: white !important;
+  font-size: 12px !important;
+  border-radius: 5px !important;
+  padding: 10px 15px !important;
+}
+
+/*Estilos para alertas de éxito */
+.mi-popup-success {
+  background-color: #4caf50 !important; /* Verde */
+  color: white !important;
+}
+
+/*Estilos para alertas de error */
+.mi-popup-error {
+  background-color: #d32f2f !important; /* Rojo */
+  color: white !important;
+}
+

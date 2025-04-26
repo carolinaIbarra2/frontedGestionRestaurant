@@ -1,0 +1,52 @@
+<div class="container">
+    <h2>Lista de Clientes</h2>
+
+    <!-- Botón para agregar usuario (solo visible para administradores) -->
+    <div class="admin-actions">
+        <a routerLink="/dashboard/customers/register" class="btn-primary">➕ Ingresar Cliente </a>
+    </div> 
+    
+    <div class="table-container">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>N°</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Celular</th>
+                    <th>Email</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Si la lista de usuarios está vacía, se muestra esta fila -->
+                <tr *ngIf="customers?.length === 0">
+                    <td colspan="5">No hay clientes para mostrar</td>
+                </tr>
+    
+                <!-- Si hay usuarios, se listan -->
+                <tr *ngFor="let customer of customers; let i = index">
+                    <td>{{ ((currentPage - 1) * pageSize) + i + 1 }}</td>
+                    <td>{{ customer.name }}</td>
+                    <td>{{ customer.last_name }}</td>
+                    <td>{{ customer.phone_number }}</td>
+                    <td>{{ customer.email }}</td>
+                    <td>
+                        <!-- Botón para ver detalles del usuario -->
+                        <button (click)="seeCustomerDetails(customer.id)" class="btn btn-detail">👁 Ver</button>
+                        <button (click)="customerDelete(customer.id)" class="btn btn-delete">🗑 Eliminar</button>    
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+   <!-- Controles de paginación -->
+    <div class="pagination">
+        <button class="page-btn" (click)="prevPage()" [disabled]="currentPage === 1">Anterior</button>
+        <span class="page-btn page-current">Página {{ currentPage }} de {{ totalPages }}</span>        
+        <button class="page-btn" (click)="nextPage()" [disabled]="currentPage === totalPages">Siguiente</button>
+    </div>
+</div>
+     
+
