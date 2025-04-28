@@ -11,6 +11,7 @@ export class CategoryDetailComponent implements OnInit {
   category: any =null;
   isEditing: boolean = false;
   selectedImage: File | null = null;
+  errorMessage: string = '';
 
   @ViewChild('fileInput') fileInputRef!: ElementRef<HTMLInputElement>;
 
@@ -60,14 +61,16 @@ export class CategoryDetailComponent implements OnInit {
         formData.append('image', this.selectedImage);
       }
   
-      this.categoryService.updateCategory(this.category.id, formData).subscribe(
-        (response: any) => {
-          console.log('Categoría actualizada con imagen');
-        },
-        (error: any) => {
-          console.error('Error al actualizar categoría con imagen', error);
-        }
-      );
+      this.categoryService.updateCategory(this.category.id, formData).subscribe({
+        next: () => {},
+          error: (err) => {
+            if (err.error && err.error.error) {
+              this.errorMessage = err.error.error; // <-- mensaje del backend
+            } else {
+              this.errorMessage = 'Error en el registro. Verifique los datos.';
+            }
+          }
+        });
     }
   }
   

@@ -60,9 +60,14 @@ export class RegisterComponent implements OnInit {
           this.router.navigate(['/dashboard/products']);
         },
         error: (err) => {
-          this.errorMessage = 'Error en el registro. Verifique los datos.';
+          if (err.error && err.error.error) {
+            this.errorMessage = err.error.error; // <-- mensaje del backend
+          } else {
+            this.errorMessage = 'Error en el registro. Verifique los datos.';
+          }
         }
       });
+
 
     } else {
       this.errorMessage = 'Formulario inválido. Revise los campos.'
@@ -71,14 +76,27 @@ export class RegisterComponent implements OnInit {
 
 
   loadCategories(): void {
-    this.productService.getCategories().subscribe({
-      next: (data) => {
-        this.categories = data.items;
-      },
-      error: (err) => {
-        console.error('Error cargando categorias:', err);
-      }
-    });
+    let allCategories: any[] = [];
+    let page = 1;
+  
+    const loadPage = () => {
+      this.productService.getCategories({ page: page,  page_size:20 }).subscribe({
+        next: (data) => {
+          allCategories = allCategories.concat(data.items);
+          if (data.next) {
+            page++;
+            loadPage();
+          } else {
+            this.categories = allCategories;
+          }
+        },
+        error: (err) => {
+          console.error('Error cargando categorías:', err);
+        }
+      });
+    };
+  
+    loadPage();
   }
 
 }

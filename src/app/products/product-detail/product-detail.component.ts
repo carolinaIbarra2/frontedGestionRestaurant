@@ -12,6 +12,7 @@ export class ProductDetailComponent implements OnInit {
   isEditing: boolean = false;
   selectedImage: File | null = null;
   categories: any[] = [];
+  errorMessage: string = '';
 
   @ViewChild('fileInput') fileInputRef!: ElementRef<HTMLInputElement>;
   
@@ -60,38 +61,62 @@ export class ProductDetailComponent implements OnInit {
 
     if (!this.isEditing && this.products && this.products.id) {
       const formData = new FormData();
-      formData.append('name', this.products.name);
-      formData.append('category', this.products.category);
-      formData.append('description', this.products.description);
-      formData.append('price', this.products.price);
-      formData.append('is_active', this.products.is_active.toString());
-
+      formData.append('name', this.products.name || '');
+      if (Array.isArray(this.products.category) && this.products.category.length > 0) {
+        formData.append('category', this.products.category[0].id.toString());
+      } else if (typeof this.products.category === 'object' && this.products.category !== null) {
+        formData.append('category', this.products.category.id.toString());
+      } else {
+        formData.append('category', '');
+      }
+  
+      formData.append('description', this.products.description || '');
+      formData.append('price', this.products.price?.toString() || '');
+      formData.append('is_active', this.products.is_active ? 'true' : 'false');
+  
       if (this.selectedImage) {
         formData.append('image', this.selectedImage);
       }
-
-      this.productService.updateProduct(this.products.id, formData).subscribe(
-        (response: any) => {
-          console.log('Producto actualizado con imagen');
-        },
-        (error: any) => {
-          console.error('Error al actualizar producto con imagen', error);
+  
+      this.productService.updateProduct(this.products.id, formData).subscribe({
+        next: () => {},
+        error: (err) => {
+          if (err.error && err.error.error) {
+            this.errorMessage = err.error.error;
+          } else {
+            this.errorMessage = 'Error en el registro. Verifique los datos.';
+          }
         }
-      );
+      });
     }
   }
+  
 
 
   loadCategories(): void {
-    this.productService.getCategories().subscribe({
-      next: (data) => {
-        this.categories = data.items;
-      },
-      error: (err) => {
-        console.error('Error cargando categorias:', err);
-      }
-    });
+    let allCategories: any[] = [];
+    let page = 1;
+  
+    const loadPage = () => {
+      this.productService.getCategories({ page: page,  page_size:20 }).subscribe({
+        next: (data) => {
+          allCategories = allCategories.concat(data.items);
+          if (data.next) {
+            page++;
+            loadPage();
+          } else {
+            this.categories = allCategories;
+          }
+        },
+        error: (err) => {
+          console.error('Error cargando categorías:', err);
+        }
+      });
+    };
+  
+    loadPage();
   }
+  
 
   get productCategoriesText(): string {
     return Array.isArray(this.products?.category) && this.products.category.length

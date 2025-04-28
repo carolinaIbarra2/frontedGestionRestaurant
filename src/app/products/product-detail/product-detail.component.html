@@ -35,7 +35,7 @@
     <div class="detail-item">
         <strong>Imagen:</strong>
         <img *ngIf="products.image" [src]="products.image" alt="Imagen" class="image">
-        <input *ngIf="isEditing" type="file" (change)="onImageSelected($event)" #fileInput hidden />
+        <input *ngIf="isEditing" type="file" (change)="onImageSelected($event)" hidden #fileInput />
             <button class="button-image" type="button" (click)="onClickFileInput()">Seleccionar Imagen</button>
             <span *ngIf="selectedImage">{{ selectedImage.name }}</span>
     </div>

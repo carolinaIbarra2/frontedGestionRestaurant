@@ -53,7 +53,11 @@ export class RegisterComponent implements OnInit {
             this.router.navigate(['/dashboard/categories']);
           },
           error: (err) => {
-            this.errorMessage = 'Error en el registro. Verifique los datos.';
+            if (err.error && err.error.error) {
+              this.errorMessage = err.error.error; // <-- mensaje del backend
+            } else {
+              this.errorMessage = 'Error en el registro. Verifique los datos.';
+            }
           }
         });
   

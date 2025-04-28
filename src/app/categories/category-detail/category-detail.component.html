@@ -39,4 +39,6 @@
     </div>
 
     <button (click)="edit()" class="btn btn-edit">{{ isEditing ? 'Guardar' : '✏ Editar' }}</button>
+    <div *ngIf="errorMessage" class="error-box">{{ errorMessage }}</div>
+
 </div>

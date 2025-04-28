@@ -33,8 +33,7 @@
             <button type="submit" [disabled]="registerForm.invalid">Registrar</button>
         </div>
 
-        <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
-        
+        <div *ngIf="errorMessage" class="error-box">{{ errorMessage }}</div>        
 
     </form>
 </div>

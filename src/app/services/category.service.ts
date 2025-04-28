@@ -65,7 +65,6 @@ export class CategoryService {
 
     //Actualizar categorias PUT
     updateCategory(category_id: number, categoryData: any): Observable<any> {
-        console.log(categoryData);
         return this.http.put(`${this.baseUrl}${category_id}/`, categoryData, { headers: this.getAuthHeadersMultipart() });
       }
       
