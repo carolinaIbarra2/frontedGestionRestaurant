@@ -1,0 +1,26 @@
+<div class="form-container">
+    <h2>Registro de Formas de pago</h2>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="name">Nombre forma de pago:</label>
+            <input id="name" formControlName="name" type="text" required>
+            <div *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched">
+                <small class="text-danger">El nombre es obligatorio</small>
+            </div>
+        </div>
+
+        <div class="special-options">
+            <div>
+                <label for="is_active">Está Activo:</label>
+                <input id="is_active" formControlName="is_active" type="checkbox" />
+            </div>
+        </div> 
+
+        <div class="button-container">
+            <button type="submit" [disabled]="registerForm.invalid">Registrar</button>
+        </div>
+
+        <div *ngIf="errorMessage" class="error-box">{{ errorMessage }}</div>
+        
+    </form>
+</div>

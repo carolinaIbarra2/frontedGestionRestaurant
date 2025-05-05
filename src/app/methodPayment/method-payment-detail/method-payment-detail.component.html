@@ -1,0 +1,24 @@
+<div class="methodPayment-details" *ngIf="methodPayment">
+    <h2>Detalles de la Forma de pago</h2>
+
+    <div class="detail-item">
+        <strong>Nombre:</strong>
+        <span *ngIf="!isEditing">{{ methodPayment.name }}</span>
+        <input *ngIf="isEditing" [(ngModel)]="methodPayment.name">
+    </div>
+
+    <div class="detail-item">
+        <strong>Esta activo:   </strong>
+        <span *ngIf="!isEditing">{{ methodPayment.is_active ? 'Sí' : 'No' }}</span>
+        <input *ngIf="isEditing" id="is_active" type="checkbox" [(ngModel)]="methodPayment.is_active" />
+    </div>
+    <div class="detail-item">
+        <strong>Fecha creación:</strong>
+        <span *ngIf="!isEditing">{{ methodPayment.date_created }}</span>
+    </div>
+
+    <button (click)="edit()" class="btn btn-edit">{{ isEditing ? 'Guardar' : '✏ Editar' }}</button>
+
+    <div *ngIf="errorMessage" class="error-box">{{ errorMessage }}</div>
+
+</div>
