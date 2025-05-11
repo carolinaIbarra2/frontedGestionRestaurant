@@ -1,0 +1,91 @@
+<div class="factura-details" *ngIf="factura">
+    <h2>Detalles de la factura</h2>
+
+    <div class="detail-item">
+        <strong>Consecutivo:</strong>
+        <span *ngIf="!isEditing">{{ factura.consecutive }}</span>
+        <span *ngIf="isEditing">{{ factura.consecutive }}</span>
+    </div>
+
+    <div class="detail-item">
+        <strong>Prefijo:</strong>
+        <span *ngIf="!isEditing">{{ factura.prefix }}</span>
+        <span *ngIf="isEditing">{{ factura.prefix }}</span>
+    </div>
+    
+    <div class="detail-item">
+        <strong>Número de mesa:</strong>
+        <span *ngIf="!isEditing">{{ factura.table_number }}</span>
+        <input *ngIf="isEditing" [(ngModel)]="factura.table_number">
+    </div>
+
+    <div class="detail-item">
+        <strong>Método de pago:</strong>
+        <span *ngIf="!isEditing">{{ facturaMethodPaymentText }}</span>
+
+        <div *ngIf="isEditing" class="methodPayment-container">
+            <label *ngFor="let methodPayment of methodPayments">
+                <input 
+                    type="checkbox" 
+                    [value]="methodPayment.name" 
+                    (change)="toggleMethodPayment(methodPayment.id)" 
+                    [checked]="isMethodPaymentSelected(methodPayment.id)" />
+                {{ methodPayment.name }}
+            </label>
+        </div>
+    </div>
+
+    <div class="detail-item">
+        <strong>Empleado:</strong>
+        <span *ngIf="!isEditing">{{ factura.user.name }} {{ factura.user.last_name }}</span>
+        <span *ngIf="isEditing">{{ factura.user.name }} {{ factura.user.last_name }}</span>
+    </div>
+
+    <div class="detail-item">
+        <strong>Cliente:</strong>
+        <span *ngIf="!isEditing">{{ factura.customer.name }} {{ factura.customer.last_name }}</span>
+        <span *ngIf="isEditing">{{ factura.customer.name }} {{ factura.customer.last_name }}</span>
+    </div>  
+    
+    <div class="detail-item">
+        <strong>Estado:</strong>
+        <span *ngIf="!isEditing">{{ factura.estado }}</span>
+        <span *ngIf="isEditing">{{ factura.estado }}</span>
+    </div>
+
+    <div class="detail-item">
+        <strong>Productos:</strong>
+        <table *ngIf="factura?.products?.length" class="product-table">
+            <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Precio Unitario</th>
+                <th>Cantidad</th>
+                <th>Subtotal</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let product of factura.products">
+                <td>{{ product.name }}</td>
+                <td>{{ product.description }}</td>
+                <td>{{ product.precio_unitario | currency:'COP' }}</td>
+                <td>{{ product.cantidad }}</td>
+                <td>{{ product.subtotal | currency:'COP' }}</td>
+            </tr>
+            </tbody>
+        </table>
+        <p *ngIf="!factura?.products?.length">No hay productos registrados.</p>
+    </div>
+
+    <div class="detail-item">
+        <strong>Valor factura:</strong>
+        <span *ngIf="!isEditing">{{ factura.value }}</span>
+    </div>
+
+    <button (click)="edit()" class="btn btn-edit">{{ isEditing ? 'Guardar' : '✏ Editar' }}</button>
+
+    <div *ngIf="errorMessage" class="error-box">{{ errorMessage }}</div>
+
+
+</div>

@@ -18,6 +18,7 @@ const routes: Routes = [
       { path: 'categories', loadChildren: () => import('./categories/categories.module').then(m => m.CategoriesModule) }, // Carga el módulo de categorias
       { path: 'products', loadChildren: () => import('./products/products.module').then(m => m.ProductsModule) }, // Carga el módulo de productos
       { path: 'methodPayments', loadChildren: () => import('./methodPayment/methodPayment.module').then(m => m.MethodPaymentModule) }, // Carga el módulo de formas de pago
+      { path: 'facturas', loadChildren: () => import('./factura/factura.module').then(m => m.FacturaModule) }, 
     ]
   },
 ];

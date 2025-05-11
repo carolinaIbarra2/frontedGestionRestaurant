@@ -1,0 +1,46 @@
+<div class="container">
+    <h2>Lista de Facturas</h2>
+    
+    <div class="table-container">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>N°</th>
+                    <th>Prefijo</th>
+                    <th>Consecutivo</th>
+                    <th>Valor</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Si la lista de usuarios está vacía, se muestra esta fila -->
+                <tr *ngIf="facturas?.length === 0">
+                    <td colspan="5">No hay facturas para mostrar</td>
+                </tr>
+    
+                <!-- Si hay facturas, se listan -->
+                <tr *ngFor="let factura of facturas; let i = index">
+                    <td>{{ ((currentPage - 1) * pageSize) + i + 1 }}</td>
+                    <td>{{ factura.prefix }}</td>
+                    <td>{{ factura.consecutive }}</td>
+                    <td>{{ factura.value }}</td>
+                    <td>{{ factura.estado }}</td>
+                    <td>
+                        <!-- Botón para ver detalles del usuario -->
+                        <button (click)="seeFacturaDetails(factura.id)" class="btn btn-detail">👁 Ver</button>
+                        <button (click)="facturaDelete(factura.id)" class="btn btn-delete">🗑 Eliminar</button>    
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+   <!-- Controles de paginación -->
+    <div class="pagination">
+        <button class="page-btn" (click)="prevPage()" [disabled]="currentPage === 1">Anterior</button>
+        <span class="page-btn page-current">Página {{ currentPage }} de {{ totalPages }}</span>        
+        <button class="page-btn" (click)="nextPage()" [disabled]="currentPage === totalPages">Siguiente</button>
+    </div>
+</div>
+     

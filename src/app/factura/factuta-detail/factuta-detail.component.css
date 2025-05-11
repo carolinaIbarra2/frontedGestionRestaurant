@@ -1,0 +1,143 @@
+/* ===== Estilos generales ===== */
+html, body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f3f4f6;
+    display: flex;
+    margin: 0;
+}
+
+/* ===== Contenedor Principal ===== */
+.factura-details {
+    background-color: #fff;
+    width: 100%;
+    max-width: 600px;
+    padding: 10px;
+
+    border-radius: 10px;
+    border: 0.1px solid rgb(193, 193, 242);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-left: 350px;;
+    margin-top: 30px;
+}
+
+
+/* ===== Estilos de los Detalles ===== */
+.detail-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.detail-item strong {
+    font-size: 12px;
+    color: #555;
+    width: 300px; /* Ajusta según el ancho deseado para los títulos */
+    text-align: left; /* Alinea el texto a la derecha */
+    display: inline-block;
+}
+
+.detail-item span {
+    font-size: 10px;
+    color: #333;
+}
+
+.detail-item span, 
+.detail-item input {
+    flex: 1; /* Ocupa el espacio restante */
+    min-width: 50px; 
+}
+
+/* ===== Inputs Editables ===== */
+.detail-item input {
+    padding: 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    border: 0.1px solid rgb(193, 193, 242);
+    background-color: #f9fafb;
+    transition: border-color 0.3s;
+    width: 60%;
+}
+
+/* ===== Botón de Edición ===== */
+.btn-edit {
+    display: block;
+    width: 100%;
+    max-width: 120px;
+    margin: 15px auto 0;
+    padding: 10px;
+    background: #ffddb5;
+    color: #87431d;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  
+  .btn-edit:hover {
+    background: #f5c999;
+  }
+
+  button:focus {
+    outline: none;
+    box-shadow: 0px 0px 5px rgba(182, 137, 12, 0.5);
+}
+
+
+/*Mensaje error*/
+.error-box {
+    background-color: #ffe5e5;        /* Fondo rosado suave */
+    color: #d8000c;                   /* Texto rojo oscuro */
+    border: 1px solid #d8000c;        /* Borde rojo oscuro */
+    padding: 12px 16px;
+    margin: 10px 0;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.error-box::before {
+    content: '⚠️ ';
+    margin-right: 5px;
+}
+  
+.edit-password{
+    font-size: 13px;
+}
+
+.methodPayment-container {
+    display: flex;
+    gap: 10px; /* Espaciado entre cada rol */
+    align-items: flex-start;
+    flex-direction: column-reverse;
+  }
+ 
+
+.methodPayment-container label {
+    display: flex;
+    align-items: left;
+    font-size: 12px;
+    color: #333;
+    cursor: pointer;
+}
+
+.methodPayment-container input[type="checkbox"] {
+    margin: 0; /* Elimina márgenes extra */
+    padding: 0; /* Elimina padding extra */
+    width: 12px; /* Ajusta el tamaño del checkbox */
+    height: 12px;
+    vertical-align: middle; /* Asegura alineación vertical con el texto */
+}
+
+.product-table {
+    color: #555;
+    padding: 8px;
+    border-radius: 6px;
+    font-size: 10px;
+    border: 0.1px solid rgb(193, 193, 242);
+    text-align: center;
+
+}
