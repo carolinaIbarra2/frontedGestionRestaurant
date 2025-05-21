@@ -14,6 +14,7 @@ export class FacturaListComponent implements OnInit{
   facturas: any[] = []
   selectedFactura: any = null;
 
+  
   totalPages: number = 1;
   currentPage: number = 1;
   pageSize: number = 5; // valor usado por defecto en la paginación del backend

@@ -1,0 +1,284 @@
+/* ===== Estilos generales para el Formulario de registro ===== */
+
+/* Aplicar estilos de fuente y sombra a todo el documento */
+html,body{
+    font-family: 'Inter', sans-serif;
+    background-color: #f3f4f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 95vh;
+    margin: 0;
+}
+
+
+/* ===== Contenedor Principal del Formulario ===== */
+
+.form-container {
+    background-color: #fff;
+    width: 100%;
+    max-width: 700px;  /* Limitar el ancho del formulario */
+    margin: 20px auto;
+    padding: 20px 40px;
+    border-radius: 10px;
+    border: 0.1px solid rgb(193, 193, 242); /* Borde azul */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */ 
+}
+
+/* Título del formulario, centrado y con espaciado inferior */
+h2 {
+    text-align: center;
+    margin-top: 7px;
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 15px;
+}
+
+/* ===== Grupos de Campos de Entrada ===== */
+/* Estilo para el contenedor del formulario en dos columnas */
+
+/* Cada grupo de formulario ocupará el 45% del ancho (2 columnas) */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 35px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 14px;
+}
+
+/* Etiquetas de los campos del formulario */
+.form-group label {
+    font-size: 12px;
+    color: #555;
+    margin-bottom: 0.1px;
+}
+
+/* Campos de entrada de texto */
+.form-group input, .form-group select {
+    padding: 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    background-color: #f9fafb;
+    transition: border-color 0.3s;
+    border: 0.1px solid rgb(193, 193, 242); /* Borde azul */
+}
+
+.special-options label {
+    font-size: 12px;
+    color: #555;
+}
+
+.special-options input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin-left: 5px;
+}
+
+/* Mensajes de error en los campos */
+.form-group .text-danger {
+    font-size: 12px;
+    color: #ef4444; 
+    margin-top: 3px;
+}
+
+.form-group .text-success {
+    font-size: 12px;
+    color: #29d316; 
+    margin-top: 3px;
+}
+
+/* Estilos para el boton */
+button {
+    width: 100%;
+    max-width: 100px;
+    padding: 12px;
+    background-color: rgb(184, 184, 242);
+    font-weight: 600;
+    color: white;
+    font-size: 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 5px; /* Ajusta según sea necesario */
+}
+
+
+/* Efecto hover en el botón de envío */
+button:hover {
+    background-color: rgb(228,111,43);
+}
+
+/* Efectos de transición para el botón */
+button:focus {
+    outline: none;
+    box-shadow: 0px 0px 5px rgba(182, 137, 12, 0.5);
+}
+
+
+label {
+ font-size: 16px;
+ cursor: pointer;
+}
+
+.facturas-container {
+    padding: 10px;
+    border-radius: 6px;
+    background-color: #f9fafb;  /* Color azul claro */
+    border: 0.1px solid rgb(193, 193, 242);
+}
+
+/*Mensaje error*/
+.error-box {
+    background-color: #ffe5e5;        /* Fondo rosado suave */
+    color: #d8000c;                   /* Texto rojo oscuro */
+    border: 1px solid #d8000c;        /* Borde rojo oscuro */
+    padding: 12px 16px;
+    margin: 10px 0;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.error-box::before {
+    content: '⚠️ ';
+    margin-right: 5px;
+}
+
+.empleado {
+    font-size: 12px;
+}
+
+ng-select.form-control {
+  display: block;
+  width: 100%;
+  min-height: 38px;
+  border: 0.1px solid rgb(193, 193, 242); /* Borde azul */
+  border-radius: 6px;
+  padding: 8px;
+  font-size: 12px;
+  background-color: #f9fafb;
+}
+
+.form-customer label {
+    font-size: 12px;
+    color: #555;
+    margin-bottom: 0.1px;
+}
+
+/* Este contenedor alinea input y botón horizontalmente */
+.input-button-group {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* espacio entre input y botón */
+  flex-wrap: nowrap;
+}
+
+/* Asegúrate de que el input tenga una anchura fija o flexible */
+.input-button-group input {
+  flex: 1 1 auto;
+  padding: 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  background-color: #f9fafb;
+  transition: border-color 0.3s;
+  border: 0.1px solid rgb(193, 193, 242);
+  height: 35px;
+  box-sizing: border-box;
+}
+
+.btn-customer {
+    height: 35px;
+    font-size: 12px;
+    padding: 0 10px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #bebebe;
+    background-color: #a6510f;
+}
+
+.product-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-size: 12px;
+}
+
+.product-table th, .product-table td {
+    border: 1px solid #ccc;
+    padding: 8px 12px;
+    text-align: left;
+}
+
+.product-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.product-table td input {
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.product-table td button {
+    background-color: #e74c3c;
+    border: none;
+    color: white;
+    font-size: 12px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+.product-table td button:hover {
+    background-color: #c0392b;
+}
+
+button[type="button"] {
+    margin-top: 0.5rem;
+    background-color: #2ecc71;
+    border: none;
+    padding: 6px 12px;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+button[type="button"]:hover {
+    background-color: #27ae60;
+}
+
+.total-container {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: right;
+}
+
+.total-amount {
+  color: green;
+  margin-left: 10px;
+}
+
+.form-product {
+    font-size: 10px;
+    color: #555;
+}

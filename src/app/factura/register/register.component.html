@@ -1,0 +1,130 @@
+<div class="form-container">
+    <h2>Registro de Venta</h2>
+
+    <div class="form-group">
+        <label for="customer">Empleado que realiza el registro:</label>
+        <span *ngIf="user" class="empleado">{{user.email}}</span>
+    </div>  
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+        <div class="form-group">
+            <div>
+                <label for="is_active">Activo:</label>
+                <input id="is_active" formControlName="is_active" type="checkbox" />
+            </div>               
+        </div>
+
+        <div class="form-grid">
+
+            
+            <div class="form-group">
+                <label for="prefix">Prefijo:</label>
+                <span>{{ registerForm.get('prefix')?.value }}</span>                
+            </div>
+            
+            <div class="form-group">
+                <label for="consecutivo">Consecutivo:</label>
+                <span>{{ nextConsecutivo }}</span>
+            </div>
+
+
+            <div class="form-group">
+                <label for="table_number">Número de mesa:</label>                
+                <select class="form-select" formControlName="table_number">
+                    <option *ngFor="let table_number of table_numbers" [value]="table_number"> Mesa {{ table_number }}</option>
+                </select>   
+            </div>
+
+            <div class="form-group">
+                <label for="methodPayment">Seleccione un método de pago:</label>    
+                <select class="form-select" formControlName="methodPayment">
+                    <option *ngFor="let methodPayment of methodPayments" [value]="methodPayment.id">{{ methodPayment.name }}</option>
+                </select>          
+            </div>
+
+            <div class="form-customer">
+                <label for="customer">Seleccione el cliente (Buscar por número de identificación, en caso que no lo tengas indica '222222222222'")</label>
+                
+                <div class="input-button-group">
+                    <input type="text" 
+                            class="form-control" 
+                            id="identification"                        
+                            formControlName="customer"
+                            maxlength="20"
+                            required />
+                    <button type="button" class="btn-customer" (click)="searchCustomers()">Buscar cliente</button>
+                </div>
+                
+                <div class="form-group">
+                    <div *ngIf="customerFound === true" class="text-success">✅ Cliente encontrado</div>
+                    <div *ngIf="customerFound === false" class="text-danger">❌ Cliente no encontrado</div>
+                </div>
+            </div> 
+        </div>
+        
+        <div class="form-product">
+            <label for="productSearch">Buscar producto (por nombre):</label>
+            
+            <div class="input-button-group">
+                <input type="text"
+                    class="form-control"
+                    id="productSearch"
+                    formControlName="productSearchTerm"
+                    placeholder="Escribe el nombre del producto"
+                    maxlength="50" />
+                <button type="button" class="btn-product" (click)="searchProduct()">Buscar producto</button>
+            </div>
+            
+            <div class="form-group">
+                <div *ngIf="productFound && productFound !== null" class="text-success">
+                ✅ Producto encontrado: {{ productFound.name }} - Precio: {{ productFound.precio_unitario | currency:'COP' }}
+                <button type="button" (click)="addProductFromSearch()">Agregar al carrito</button>
+                </div>
+                <div *ngIf="productFound === false" class="text-danger">
+                ❌ Producto no encontrado
+                </div>
+            </div>
+        </div>
+
+
+        <div formArrayName="products">
+            <table class="product-table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Precio Unitario</th>
+                        <th>Cantidad</th>
+                        <th>Subtotal</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let product of products.controls; let i = index" [formGroupName]="i">
+                        <td><input type="text" formControlName="name" readonly /></td>
+                        <td><input type="text" formControlName="description" readonly /></td>
+                        <td><input type="number" formControlName="precio_unitario" readonly /></td>
+                        <td><input type="number" formControlName="cantidad" (input)="updateSubtotal(i)" min="1" /></td>
+                        <td>{{ product.get('subtotal')?.value | currency:'COP' }}</td>
+                        <td>
+                            <button type="button" (click)="removeProduct(i)">🗑️</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="total-container">
+            <label>Total de la venta:</label>
+            <span class="total-amount">{{ getTotal() | currency:'COP' }}</span>
+        </div>    
+
+        <div class="button-container">
+            <button type="submit">Registrar</button>
+        </div>
+
+        <div *ngIf="errorMessage" class="error-box">{{ errorMessage }}</div>        
+
+    </form>
+</div>

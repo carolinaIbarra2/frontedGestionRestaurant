@@ -13,6 +13,7 @@ export class LoginComponent {
 
   loginForm : FormGroup;
   errorMessage: string = '';
+  
 
   constructor(private fb: FormBuilder, private userService: UserService, private router: Router){
     this.loginForm = this.fb.group({
@@ -30,11 +31,18 @@ export class LoginComponent {
       next: (response) => {
         const token = response?.access_token;
         const refreshToken = response?.refresh_token;
+        
 
         if (token && refreshToken) {
           localStorage.setItem('access_token', token);
           localStorage.setItem('refresh_token', refreshToken);
-        
+
+          const user = {
+            id: response.user_id,
+            email: response.email
+          };
+          localStorage.setItem('user', JSON.stringify(user));  // Guarda usuario
+            
           this.router.navigate(['/dashboard']);
         } else {
           console.error('Tokens no recibidos en la respuesta');

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { PaginatedResponse } from 'src/app/models/pagination-interface'
@@ -18,7 +18,7 @@ export class FacturaService {
     private baseUrlUser = 'http://127.0.0.1:8000/api/v1/users/';
     private baseUrlProduct = 'http://127.0.0.1:8000/api/v1/products/';
     private baseUrlMethodPayment = 'http://127.0.0.1:8000/api/v1/methodPayment/';
-
+    
     constructor(private http: HttpClient, private router: Router) { }
 
     // Método privado para obtener los headers con autenticación
@@ -28,11 +28,22 @@ export class FacturaService {
         'Authorization': `Bearer ${token}`,  // Agregar token en el header
         'Content-Type': 'application/json'
         });
-    }    
+    }   
+    
+    //Obtener consecutivo
+    getNextConsecutivo(prefix: string = 'FAC'): Observable<any> {
+    const params = new HttpParams().set('prefix', prefix);
+    return this.http.get(`${this.baseUrl}next-consecutivo/`, { params });
+  }
 
     //obtener clientes desde el backend
-    getCustomer(): Observable<any>{
-        return this.http.get<any>(`${this.baseUrlCustomer}`, { headers: this.getAuthHeaders() }).pipe(
+    getCustomer(identificationFilter: string = ''): Observable<any>{
+      let url = this.baseUrlCustomer;
+      
+      if (identificationFilter) {
+        url += `?identification=${identificationFilter}`;
+      }
+      return this.http.get<any>(url, { headers: this.getAuthHeaders() }).pipe(
           catchError((error) => {
             console.error('Error en getCustomer:', error);
             return throwError(() => new Error('Error al obtener los clientes.'));
@@ -41,14 +52,9 @@ export class FacturaService {
     }
 
     //obtener metodos de pago desde el backend
-    getMethodPayment(): Observable<any>{
-      return this.http.get<any>(`${this.baseUrlMethodPayment}`, { headers: this.getAuthHeaders() }).pipe(
-        catchError((error) => {
-          console.error('Error en MethodPayment:', error);
-          return throwError(() => new Error('Error al obtener metodos de pago.'));
-        })
-     );
-  }
+    getMethodPayment(params?: any): Observable<any>{
+      return this.http.get<any>(`${this.baseUrlMethodPayment}`, { headers: this.getAuthHeaders(), params: params });
+    }
 
     //obtener empleados desde el backend
     getUser(): Observable<any>{
@@ -60,19 +66,26 @@ export class FacturaService {
        );
     }
 
-    //obtener empleados desde el backend
-    getProduct(): Observable<any>{
-        return this.http.get<any>(`${this.baseUrlProduct}`, { headers: this.getAuthHeaders() }).pipe(
-          catchError((error) => {
-            console.error('Error en getProduct:', error);
-            return throwError(() => new Error('Error al obtener los productos.'));
-          })
-       );
+    
+    getProduct(nameFilter: string = ''): Observable<any>{
+      let url = this.baseUrlProduct;
+
+      if (nameFilter) {
+        url += `?name=${encodeURIComponent(nameFilter)}`;
+      }
+
+      return this.http.get<any>(url, { headers: this.getAuthHeaders() }).pipe(
+        catchError((error) => {
+          console.error('Error en getProduct:', error);
+          return throwError(() => new Error('Error al obtener los productos.'));
+        })
+      );
     }
 
 
     //Crear una factura POST
     registerFactura(facturaData: any): Observable<any> {
+        console.log('Factura enviada al backend:', JSON.stringify(facturaData, null, 2));
         return this.http.post(`${this.baseUrl}`, facturaData, { headers: this.getAuthHeaders() });    
     }
 

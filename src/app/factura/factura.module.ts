@@ -5,6 +5,7 @@ import { FacturaRoutingModule } from './factura-routing.module';
 import { FacturaListComponent } from './factura-list/factura-list.component';
 import { RegisterComponent } from './register/register.component';
 import { FactutaDetailComponent } from './factuta-detail/factuta-detail.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
     declarations: [
@@ -16,7 +17,8 @@ import { FactutaDetailComponent } from './factuta-detail/factuta-detail.componen
         CommonModule,
         FacturaRoutingModule,
         ReactiveFormsModule,
-        FormsModule
+        FormsModule,
+        NgSelectModule
     ]
 })
 export class FacturaModule {}

@@ -37,6 +37,13 @@ export class UserService {
           // Guarda ambos tokens
           localStorage.setItem('access_token', response.access_token);  //nombres en backend
           localStorage.setItem('refresh_token', response.refresh_token); //nombres en backend
+        
+          const user = {
+            id: response.user_id,
+            email: response.email
+          };
+          localStorage.setItem('user', JSON.stringify(user));
+
         } else {
           console.error('Tokens no recibidos correctamente.');
         }
