@@ -54,7 +54,7 @@ export class FacturaListComponent implements OnInit{
       text: 'Esta acción no se puede deshacer',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Sí, eliminar',
+      confirmButtonText: 'Sí, Anular',
       cancelButtonText: 'Cancelar',
       customClass: {
         popup: 'mi-popup',
@@ -68,8 +68,8 @@ export class FacturaListComponent implements OnInit{
           next: () => {
             this.getFacturas(); // Recargar la lista después de eliminar
             Swal.fire({
-              title: '¡Eliminado!',
-              text: 'La factura ha sido eliminada con éxito.',
+              title: 'Anulado!',
+              text: 'La factura ha sido anulada con éxito.',
               icon: 'success',
               customClass: {
                 popup: 'mi-popup-success'

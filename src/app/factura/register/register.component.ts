@@ -58,7 +58,6 @@ export class RegisterComponent implements OnInit {
   addProduct(): void {
     const productForm = this.fb.group({
       name: ['', Validators.required],
-      description: [''],
       precio_unitario: [0, [Validators.required, Validators.min(0)]],
       cantidad: [1, [Validators.required, Validators.min(1)]],
       subtotal: [{ value: 0, disabled: true }]
@@ -239,7 +238,6 @@ export class RegisterComponent implements OnInit {
       const productForm = this.fb.group({
         product: [this.productFound.id || '', Validators.required],
         name: [this.productFound.name || '', Validators.required],
-        description: [this.productFound.description || ''],
         precio_unitario: [precio, [Validators.required, Validators.min(0)]],
         cantidad: [1, [Validators.required, Validators.min(1)]],
         subtotal: [{ value: subtotal, disabled: true }]

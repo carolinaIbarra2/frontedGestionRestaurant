@@ -3,54 +3,57 @@
 
     <div class="detail-item">
         <strong>Consecutivo:</strong>
-        <span *ngIf="!isEditing">{{ factura.consecutive }}</span>
-        <span *ngIf="isEditing">{{ factura.consecutive }}</span>
+        <span>{{ factura.consecutive }}</span>
     </div>
 
     <div class="detail-item">
         <strong>Prefijo:</strong>
-        <span *ngIf="!isEditing">{{ factura.prefix }}</span>
-        <span *ngIf="isEditing">{{ factura.prefix }}</span>
+        <span>{{ factura.prefix }}</span>
     </div>
     
-    <div class="detail-item">
+    <div *ngIf="!isEditing" class="detail-item">
         <strong>Número de mesa:</strong>
-        <span *ngIf="!isEditing">{{ factura.table_number }}</span>
-        <input *ngIf="isEditing" [(ngModel)]="factura.table_number">
+        <span>{{ factura.table_number }}</span>
     </div>
 
-    <div class="detail-item">
+    <div *ngIf="!isEditing" class="detail-item">
         <strong>Método de pago:</strong>
-        <span *ngIf="!isEditing">{{ facturaMethodPaymentText }}</span>
+        <span>{{ facturaMethodPaymentText  }}</span>
+    </div>    
 
-        <div *ngIf="isEditing" class="methodPayment-container">
-            <label *ngFor="let methodPayment of methodPayments">
-                <input 
-                    type="checkbox" 
-                    [value]="methodPayment.name" 
-                    (change)="toggleMethodPayment(methodPayment.id)" 
-                    [checked]="isMethodPaymentSelected(methodPayment.id)" />
-                {{ methodPayment.name }}
-            </label>
+    <form *ngIf="isEditing" [formGroup]="formFactura">
+        <div class="detail-item">
+        <strong>Número de mesa:</strong>
+        <select class="form-select" formControlName="table_number">
+            <option *ngFor="let table_number of table_numbers" [value]="table_number">Mesa {{ table_number }}</option>
+        </select>
         </div>
-    </div>
+
+        <div class="detail-item">
+        <strong>Método de pago:</strong>
+        <div class="methodPayment-container">
+            <select class="form-select" formControlName="methodPayment">
+            <option *ngFor="let methodPayment of methodPayments" [value]="methodPayment.id">
+                {{ methodPayment.name }}
+            </option>
+            </select>
+        </div>
+        </div>
+    </form>
 
     <div class="detail-item">
         <strong>Empleado:</strong>
-        <span *ngIf="!isEditing">{{ factura.user.name }} {{ factura.user.last_name }}</span>
-        <span *ngIf="isEditing">{{ factura.user.name }} {{ factura.user.last_name }}</span>
+        <span >{{ factura.user.name }} {{ factura.user.last_name }}</span>
     </div>
 
     <div class="detail-item">
         <strong>Cliente:</strong>
-        <span *ngIf="!isEditing">{{ factura.customer.name }} {{ factura.customer.last_name }}</span>
-        <span *ngIf="isEditing">{{ factura.customer.name }} {{ factura.customer.last_name }}</span>
+        <span>{{ factura.customer.name }} {{ factura.customer.last_name }}</span>
     </div>  
     
     <div class="detail-item">
         <strong>Estado:</strong>
-        <span *ngIf="!isEditing">{{ factura.estado }}</span>
-        <span *ngIf="isEditing">{{ factura.estado }}</span>
+        <span>{{ factura.estado }}</span>
     </div>
 
     <div class="detail-item">
@@ -59,7 +62,6 @@
             <thead>
             <tr>
                 <th>Nombre</th>
-                <th>Descripción</th>
                 <th>Precio Unitario</th>
                 <th>Cantidad</th>
                 <th>Subtotal</th>
@@ -68,7 +70,6 @@
             <tbody>
             <tr *ngFor="let product of factura.products">
                 <td>{{ product.name }}</td>
-                <td>{{ product.description }}</td>
                 <td>{{ product.precio_unitario | currency:'COP' }}</td>
                 <td>{{ product.cantidad }}</td>
                 <td>{{ product.subtotal | currency:'COP' }}</td>
@@ -80,7 +81,7 @@
 
     <div class="detail-item">
         <strong>Valor factura:</strong>
-        <span *ngIf="!isEditing">{{ factura.value }}</span>
+        <span>{{ factura.value }}</span>
     </div>
 
     <button (click)="edit()" class="btn btn-edit">{{ isEditing ? 'Guardar' : '✏ Editar' }}</button>
