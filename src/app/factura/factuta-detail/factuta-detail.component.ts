@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FacturaService } from '../../services/factura.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-factuta-detail',
@@ -14,10 +15,11 @@ export class FactutaDetailComponent implements OnInit {
   methodPayments: any[] = []; 
   table_numbers: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   errorMessage: string = '';
+  successMessage: string = '';
   formFactura!: FormGroup;
 
 
-  constructor(private facturaService: FacturaService, private route: ActivatedRoute, private fb: FormBuilder) {}
+  constructor(private facturaService: FacturaService, private route: ActivatedRoute, private fb: FormBuilder,private router: Router) {}
 
   ngOnInit(): void {
 
@@ -88,12 +90,18 @@ export class FactutaDetailComponent implements OnInit {
         methodPayments: this.factura.methodPayments.map((m: any) => m.id),  // arreglo de IDs
       };
 
-      console.log('Payload que se enviará al backend:', payload);
-
 
       this.facturaService.updateFactura(this.factura.id, payload).subscribe(
-        () => console.log("Factura actualizada"),
-        error => console.error("Error al actualizar factura", error)
+        () => {
+          this.successMessage = '✅ La factura se actualizó correctamente.';
+          setTimeout(() => {
+            this.successMessage = '';
+            this.router.navigate(['/dashboard/facturas']);
+          }, 2000); 
+        },
+        error => {
+          this.errorMessage = '❌ Ocurrió un error al actualizar la factura.';
+        }
       );
     }
   }

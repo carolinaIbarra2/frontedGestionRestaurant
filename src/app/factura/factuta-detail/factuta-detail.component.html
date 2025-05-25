@@ -1,6 +1,10 @@
 <div class="factura-details" *ngIf="factura">
     <h2>Detalles del registro de la venta</h2>
 
+    <div *ngIf="successMessage" class="success">
+        <p>{{ successMessage }}</p>
+    </div>
+
     <div class="detail-item">
         <strong>Consecutivo:</strong>
         <span>{{ factura.consecutive }}</span>
@@ -87,6 +91,5 @@
     <button (click)="edit()" class="btn btn-edit">{{ isEditing ? 'Guardar' : '✏ Editar' }}</button>
 
     <div *ngIf="errorMessage" class="error-box">{{ errorMessage }}</div>
-
-
+    
 </div>
