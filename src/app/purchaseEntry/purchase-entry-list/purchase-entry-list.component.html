@@ -1,0 +1,42 @@
+<div class="container">
+    <h2>Lista de Registro de Entradas de compra</h2>
+
+    <div class="table-container">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>N°</th>
+                    <th>Proveedor</th>
+                    <th>Productos</th>
+                    <th>Observaciones</th>
+                </tr>                
+            </thead>
+            <tbody>
+                <tr *ngIf="purchaseEntries?.length === 0">
+                    <td colspan="5">No hay registros de compra para mostrar</td>
+                </tr>
+
+                <tr *ngFor="let purchase_entry of purchaseEntries; let i = index">
+                    <td>{{ ((currentPage - 1) * pageSize) + i + 1 }}</td>
+                    <td>{{ purchase_entry.supplier }}</td>
+                    <td>
+                        <ul>
+                            <li *ngFor="let product of purchase_entry.products">
+                                {{ product.product_name }} (Cantidad: {{ product.quantity }})
+                            </li>
+                        </ul>
+                    </td>
+                    <td>{{ purchase_entry.observations }}</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Controles de paginación -->
+    <div class="pagination">
+        <button class="page-btn" (click)="prevPage()" [disabled]="currentPage === 1">Anterior</button>
+        <span class="page-btn page-current">Página {{ currentPage }} de {{ totalPages }}</span>        
+        <button class="page-btn" (click)="nextPage()" [disabled]="currentPage === totalPages">Siguiente</button>
+    </div>
+</div>

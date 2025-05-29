@@ -13,7 +13,7 @@ import { AuthInterceptor } from './auth/auth.interceptor';
   declarations: [
     AppComponent,
     LoginComponent,
-    DashboardComponent
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,
