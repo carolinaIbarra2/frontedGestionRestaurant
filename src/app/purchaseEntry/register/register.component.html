@@ -1,0 +1,77 @@
+<div class="form-container">
+    <h2>Registro de Compras</h2>
+
+    <div class="form-group">
+        <label for="customer">Empleado que realiza el registro:</label>
+        <span *ngIf="user" class="empleado">{{user.email}}</span>
+    </div>  
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        
+        <div class="form-grid">
+            
+            <div class="form-group">
+                <label for="supplier">Proveedor:</label>
+                <input id="supplier" formControlName="supplier" type="text" />
+            </div>
+
+            <div class="form-group">
+                <label for="observations">Observaciones:</label>                
+                <input id="observations" formControlName="observations" type="text" />
+            </div>
+           
+        
+        <div class="form-group">
+            <label for="productSearch">Buscar producto (por nombre):</label>
+            
+            <div class="input-button-group">
+                <input type="text"
+                    class="form-control"
+                    id="productSearch"
+                    formControlName="productSearchTerm"
+                    placeholder="Producto"
+                    maxlength="50" />
+                <button type="button" class="btn-product" (click)="searchProduct()">Buscar producto</button>
+            </div>
+            
+            <div class="form-group">
+                <div *ngIf="productFound && productFound !== null" class="text-success">
+                ✅ Producto encontrado: {{ productFound.name }} 
+                <button type="button" (click)="addProductFromSearch()">Agregar al carrito</button>
+                </div>
+                <div *ngIf="productFound === false" class="text-danger">
+                ❌ Producto no encontrado
+                </div>
+            </div>
+        </div>
+
+
+        <div formArrayName="products">
+            <table class="product-table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Cantidad</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let product of products.controls; let i = index" [formGroupName]="i">
+                        <td><input type="text" formControlName="name" readonly /></td>                        
+                        <td><input type="number" formControlName="quantity" /></td>
+                        <td>
+                            <button type="button" (click)="removeProduct(i)">🗑️</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>           
+
+        <div class="button-container">
+            <button type="submit">Registrar</button>
+        </div>
+
+        <div *ngIf="errorMessage" class="error-box">{{ errorMessage }}</div>        
+    </div>
+    </form>
+</div>

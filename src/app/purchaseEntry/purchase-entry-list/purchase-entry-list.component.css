@@ -68,3 +68,8 @@ h2 {
   min-width: 40px;
   text-align: center;
 }
+
+.admin-actions {
+  text-align: right;
+  margin-bottom: 15px;
+}
