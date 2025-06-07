@@ -1,0 +1,40 @@
+<div class="container">
+    <h2>Inventario</h2>
+
+    <table border="1" cellpadding="8" cellspacing="0">
+        <thead>
+            <tr>
+                <th>N°</th>
+                <th>Nombre del Producto</th>
+                <th>Cantidad Ingresada</th>
+                <th>Cantidad Salida</th>
+                <th>Cantidad Disponible</th>
+                <th>Stock Mínimo</th>
+                <th>Fecha Actualización</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of inventory; let i = index">
+                <td>{{ ((currentPage - 1) * pageSize) + i + 1 }}</td>
+                <td>{{ item.product_name }}</td>
+                <td>{{ item.amount_entered }}</td>
+                <td>{{ item.output_quantity }}</td>
+                <td [ngClass]="item.quantity_available <= item.minimum_stock ? 'alert-stock' : ''">{{ item.quantity_available }}</td>
+                <td>
+                    <input type="number" [(ngModel)]="item.minimum_stock" min="0" class="center-input" />
+                </td>
+                <td>{{ item.date_created }}</td>
+                <td>
+                    <button type="button" (click)="updateMinimumStock(item)" [disabled]="updating[item.product_id]">{{ updating[item.product_id] ? 'Guardando...' : 'Guardar' }}</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Controles de paginación -->
+    <div class="pagination">
+        <button class="page-btn" (click)="prevPage()" [disabled]="currentPage === 1">Anterior</button>
+        <span class="page-btn page-current">Página {{ currentPage }} de {{ totalPages }}</span>        
+        <button class="page-btn" (click)="nextPage()" [disabled]="currentPage === totalPages">Siguiente</button>
+    </div>
+</div>
